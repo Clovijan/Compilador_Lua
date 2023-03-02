@@ -7,10 +7,21 @@ procedimental, orientada a objetos, funcional e orientada a dados. Ela é leve e
 
 - 📄  Documentação em formato PDF: [Documentação Léxica da Linguagem Lua](https://github.com/Clovijan/Compilador_Lua/blob/main/DOCUMENTACAO/Documenta%C3%A7%C3%A3o%20da%20Linguagem%20Lua.pdf) 
 
+## 🌒 ANÁLISE LÉXICA NO PLY 🚧
+
 
 
 ## 🚀 COLABORADORES
+### ORIENTADOR 👨🏾‍🏫
+- 👨🏾 [ANDRÉ LUIZ](https://github.com/andreluisms)
 
+
+### DISCENTES 🧑🏾‍🎓👩🏾‍🎓
 - 👨🏽 [CLOVIJAN ROCHA](https://github.com/Clovijan)
 - 👨 [GILMARIO SANTOS](https://github.com/gilmariosantos1)
 - 💃🏽 [MAGDA AMARAL](https://github.com/tainy2017)
+
+## REFERÊNCIAS
+
+- [LUA.ORG](http://www.lua.org/docs.html)
+- [DOCS PLY](https://www.dabeaz.com/ply/ply.html)
