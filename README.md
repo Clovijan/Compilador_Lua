@@ -12,16 +12,16 @@ procedimental, orientada a objetos, funcional e orientada a dados. Ela é leve e
 
 
 ## 🚀 COLABORADORES
-### ORIENTADOR 👨🏾‍🏫
+### 👨🏾‍🏫 ORIENTADOR
 - 👨🏾 [ANDRÉ LUIZ](https://github.com/andreluisms)
 
 
-### DISCENTES 🧑🏾‍🎓👩🏾‍🎓
+### 🧑🏾‍🎓👩🏾‍🎓 DISCENTES 
 - 👨🏽 [CLOVIJAN ROCHA](https://github.com/Clovijan)
 - 👨 [GILMARIO SANTOS](https://github.com/gilmariosantos1)
 - 💃🏽 [MAGDA AMARAL](https://github.com/tainy2017)
 
-## REFERÊNCIAS
+## 🗄️ REFERÊNCIAS
 
 - [LUA.ORG](http://www.lua.org/docs.html)
 - [DOCS PLY](https://www.dabeaz.com/ply/ply.html)
