@@ -17,7 +17,7 @@ procedimental, orientada a objetos, funcional e orientada a dados. Ela é leve e
 - 👨🏾 [ANDRÉ LUIZ](https://github.com/andreluisms)
 
 
-### 🧑🏾‍🎓👩🏾‍🎓 DISCENTES 
+### 🧑🏾‍🎓 DISCENTES 
 - 👨🏽 [CLOVIJAN ROCHA](https://github.com/Clovijan)
 - 👨 [GILMARIO SANTOS](https://github.com/gilmariosantos1)
 - 💃🏽 [MAGDA AMARAL](https://github.com/tainy2017)
@@ -26,3 +26,9 @@ procedimental, orientada a objetos, funcional e orientada a dados. Ela é leve e
 
 - [LUA.ORG](http://www.lua.org/docs.html)
 - [DOCS PLY](https://www.dabeaz.com/ply/ply.html)
+
+
+### 👨🏾‍💻 TIME 
+
+| [<img src="https://avatars.githubusercontent.com/u/5929700?v=4" width=115><br><sub>ANDRÉ LUIZ</sub>](https://github.com/andreluisms)| [<img src="https://avatars.githubusercontent.com/u/37074720?s=96&v=4" width=115><br><sub>CLOVIJAN ROCHA</sub>](https://github.com/Clovijan) |  [<img src="https://avatars.githubusercontent.com/u/12619577?v=4" width=115><br><sub>GILMARIO SANTOS</sub>](https://github.com/guilhermeonrails) |  [<img src="https://avatars.githubusercontent.com/u/31852144?v=4" width=115><br><sub>MAGDA AMARAL</sub>](https://github.com/alexfelipe) |
+| :---: | :---: | :---: | :---: |
