@@ -1,7 +1,32 @@
 import ply.lex as lex
 
+reserved = {
+    'break': 'BREAK', 
+    'else' : 'ELSE',
+    'elseif' : 'ELSEIF',
+    'for' : 'FOR',
+    'and' : 'AND',
+    'do': 'DO',
+    'end':'END',
+    'if' : 'IF',
+    'goto':'GOTO',
+    'true' : 'TRUE',
+    'false': 'FALSE',
+    'function' : 'FUNCTION',
+    'in':'IN',
+    'local': 'LOCAL',
+    'nil': 'NIL',
+    'not': 'NOT',
+    'or': 'OR',
+    'repeat': 'REPEAT',
+    'local': 'LOCAL',
+    'return': 'RETURN',
+    'then': 'THEN',
+    'until': 'UNTIL',
+    'while': 'WHILE'
+ }
 # Lista de tokens
-tokens = (
+tokens = [
     'NAME',
     'NUMBER',
     'PLUS',
@@ -18,22 +43,10 @@ tokens = (
     'COLON',
     'DOT',
     'VARARGS',
-    'IF',
-    'THEN',
-    'ELSEIF',
-    'ELSE',
-    'END',
-    'WHILE',
-    'DO',
-    'REPEAT',
     'UNTIL',
-    'FOR',
-    'IN',
-    'FUNCTION',
     'LOCAL',
-    'RETURN',
-    'BREAK',
-)
+ 
+ ] + list(reserved.values()) 
 
 # Regras de expressões regulares para tokens simples
 t_PLUS = r'\+'
@@ -50,25 +63,6 @@ t_SEMICOLON = r';'
 t_COLON = r':'
 t_DOT = r'\.'
 t_VARARGS = r'\.\.\.'
-
-# Palavras-chave
-reserved = {
-    'if': 'IF',
-    'then': 'THEN',
-    'elseif': 'ELSEIF',
-    'else': 'ELSE',
-    'end': 'END',
-    'while': 'WHILE',
-    'do': 'DO',
-    'repeat': 'REPEAT',
-    'until': 'UNTIL',
-    'for': 'FOR',
-    'in': 'IN',
-    'function': 'FUNCTION',
-    'local': 'LOCAL',
-    'return': 'RETURN',
-    'break': 'BREAK',
-}
 
 # Nomes e números
 def t_NAME(t):
