@@ -14,7 +14,6 @@ reserved = {
     'false': 'FALSE',
     'function' : 'FUNCTION',
     'in':'IN',
-    'local': 'LOCAL',
     'nil': 'NIL',
     'not': 'NOT',
     'or': 'OR',
@@ -43,6 +42,7 @@ tokens = [
     'COMMA',
     'SEMICOLON',
     'COLON',
+    'DUALCOLON',
     'DOT',
     'VARARGS',
     'UNTIL',
@@ -53,6 +53,8 @@ tokens = [
     'LT',
     'GTEQUALS',
     'LTEQUALS', 
+    'ATRIB',
+    'PERCENTUAL',
  ] + list(reserved.values()) 
 
 # Regras de expressões regulares para tokens simples
@@ -70,8 +72,8 @@ t_RBRACE = r'}'
 t_COMMA = r','
 t_SEMICOLON = r';'
 t_COLON = r':'
-t_COLON = r'::'
-t_AND = r'%'
+t_DUALCOLON = r'::'
+t_PERCENTUAL = r'%'
 t_DOT = r'\.'
 t_VARARGS = r'\.\.\.'
 t_LCOLCH  = r'\['

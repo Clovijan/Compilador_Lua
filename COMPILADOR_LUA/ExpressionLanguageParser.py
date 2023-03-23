@@ -1,13 +1,17 @@
 import ply.yacc as yacc
-from Analise_Lexica import *
+from ExpressionLanguageLex import *
 
 def p_program(p):
-  '''program :  comands
+  '''program : comands
+             | var_global program
              | function
              | local_function
              | comands program
              | function program
              | local_function program'''
+
+def p_var_global(p):
+  '''var : NAME ATRIB exp_16'''
 
 def p_function(p):
   '''function : FUNCTION signature comands END '''
