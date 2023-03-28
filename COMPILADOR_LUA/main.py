@@ -6,6 +6,3 @@
 
 #parser = yacc.yacc()
 #parser.parse()
-
-python = "Ola mundo"
-print(python)

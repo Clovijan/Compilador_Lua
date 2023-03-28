@@ -62,7 +62,8 @@ def p_comand_2(p):
               | IF list_exp THEN comands ELSE comand_2 END'''
 
 def p_fordo(p):
-  '''fordo : FOR exp DO comands'''
+  '''fordo : FOR exp DO comands
+           | END'''
 
 def p_forin(p):
   '''forin : FOR exp IN comands'''
