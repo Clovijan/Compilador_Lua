@@ -12,7 +12,7 @@ procedimental, orientada a objetos, funcional e orientada a dados. Ela é leve e
 
 ## 🌒 ANÁLISE SINTÁTICA 🚧
 
-- DOCUMENTAÇÃO ANÁLISE SINTÁTICA 
+- 📄 Documentação em formato PDF: [Documentação Sintática da Linguagem Lua](https://github.com/Clovijan/Compilador_Lua/blob/main/DOCUMENTACAO/Documenta%C3%A7%C3%A3o%20Sint%C3%A1tica%20da%20Linguagem%20LUA.pdf)
 
 ## 🚀 COLABORADORES
 ### 👨🏾‍🏫 ORIENTADOR
