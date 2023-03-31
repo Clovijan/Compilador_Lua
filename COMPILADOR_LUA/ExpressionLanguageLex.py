@@ -55,6 +55,9 @@ tokens = [
     'LTEQUALS', 
     'ATRIB',
     'PERCENTUAL',
+    'EXPO',
+    'CONCAT'
+    'TAG'
  ] + list(reserved.values()) 
 
 # Regras de expressões regulares para tokens simples
@@ -82,6 +85,9 @@ t_GT = r'>'
 t_LT = r'<'
 t_GTEQUALS = r'>='
 t_LTEQUALS = r'<='
+t_EXPO = r'^'
+t_CONCAT = r'\.\.'
+t_TAG = r'#'
 
 # Nomes e números
 def t_NAME(t):
