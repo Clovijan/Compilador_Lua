@@ -4,6 +4,7 @@ import SintaxeAbstrata as sa
 import Visitor as vis
 import SemanticVisitor as sv
 
+
 # definição de trecho
 def p_program(p):
     '''program : block'''
