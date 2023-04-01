@@ -41,7 +41,7 @@ def p_ret_command(p):
                    | RETURN LCOLCH list_exps RCOLCH COMMA'''
 
 
-#definição de comandret
+# definição de comandret
 def p_command_ret(p):
     '''command_ret : RETURN
                  | RETURN list_exps
@@ -197,6 +197,7 @@ def p_function(p):
     '''function : FUNCTION name_function body_function'''
 
 
+# definicao de if
 def p_if(p):
     '''if : IF exp THEN block else_ifs else END'''
 
@@ -239,7 +240,7 @@ def p_struct_repeat(p):
 def p_local_function(p):
     '''local_function : FUCTION name_function body_function'''
 
-
+# definicao de error
 def p_error(p):
     print("Syntax error in input!")
 
