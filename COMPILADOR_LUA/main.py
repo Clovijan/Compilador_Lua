@@ -31,13 +31,6 @@ print("A idade é:", tabela.idade)
 print("A ocupação é:", tabela.ocupacao)
 '''
 lexer.input(data)
-parser = yacc.yacc(start='program')
+parser = yacc.yacc()
 result = parser.parse(debug=False)
-print("#realiza a analise semantica")
-
-visitor = sv.SemanticVisitor()
-
-print('#imprime o programa passado como entrada')
-visitor = vis.Visitor()
-for r in result:
-    r.accept(visitor)
+print ("#realiza a analise semantica")

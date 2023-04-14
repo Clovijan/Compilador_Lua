@@ -7,10 +7,24 @@ class Program(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
-
+    
+class ProgramConcrete(Program):
+  def __init__(self, block):
+    self.block = block
+  def accept(self, visitor):
+    pass
+  
+  
 '''declaração de bloco'''
 class Block(metaclass=ABCMeta)
   @abstractmethod
+  def accept(self, visitor):
+    pass
+
+class BlockConcrete(Block):
+  def __init__(self, command, command_ret):
+    self.command = command
+    self.command_ret = command_ret
   def accept(self, visitor):
     pass
 
@@ -19,6 +33,9 @@ class Command(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
+
+class CommandConcrete(Command):
+  def __init__(self, )
 
 '''declaração de comandoret'''
 class Command_Ret(metaclass=ABCMeta)

@@ -1,8 +1,11 @@
 import ply.yacc as yacc
 from ExpressionLanguageLex import *
-import SintaxeAbstrata as sa
-import Visitor as vis
-import SemanticVisitor as sv
+
+precedence = (('left', 'OR'), ('left', 'AND'), ('left', 'GT', 'LT', 'GTEQUALS',
+                                                'LTEQUALS', 'EQUALS', 'DIF'),
+              ('left', 'CONCAT'), ('left', 'PLUS', 'MINUS'),
+              ('left', 'PERCENTUAL', 'TIMES',
+               'DIVIDE'), ('left', 'NOT', 'TAG'), ('left', 'EXPO'))
 
 
 # definição de trecho
@@ -27,18 +30,12 @@ def p_command(p):
                | DO block END
                | struct_while
                | struct_repeat
-               | struct_if_Else
+               | if
                | struct_for
                | struct_for_in
                | function
                | local_function
                | local_var'''
-
-
-# definição de comandoret
-def p_ret_command(p):
-    '''ret_command : RETURN LCOLCH list_exps RCOLCH
-                   | RETURN LCOLCH list_exps RCOLCH COMMA'''
 
 
 # definição de comandret
@@ -54,7 +51,7 @@ def p_rotulo(p):
 
 
 # definicao de nomefuncao
-def name_fuction(p):
+def p_name_function(p):
     '''name_function : NAME
                      | NAME DOT NAME
                      | NAME COLON NAME'''
@@ -73,10 +70,16 @@ def p_var(p):
            | prefix_exp DOT NAME'''
 
 
+def p_prefix_exp(p):
+    ''' prefix_exp : var
+                 | call_function 
+                 | LPAREN exp RPAREN'''
+
+
 # definição de listanomes
 def p_list_names(p):
-    '''list_names: NAME 
-                 | NAME COMMA list_names'''
+    '''list_names : NAME 
+                  | NAME COMMA list_names'''
 
 
 # definição de listaexps
@@ -87,17 +90,17 @@ def p_list_exps(p):
 
 # definição de exp
 def p_exp(p):
-    '''exp: NIL
-          | FALSE
-          | TRUE
-          | NUMBER
-          | CADEIA
-          | VARARGS
-          | def_function
-          | exp_prefix
-          | construct_table
-          | exp op_bin exp
-          | op_unaria exp'''
+    '''exp : NIL
+           | FALSE
+           | TRUE
+           | NUMBER
+           | STRING
+           | VARARGS
+           | def_function
+           | exp_prefix
+           | construct_table
+           | exp op_bin exp
+           | op_unary exp'''
 
 
 # definição de expprefixo
@@ -109,15 +112,14 @@ def p_exp_prefix(p):
 
 # definição de chamadafuncao
 def p_call_function(p):
-    '''call_function: exp_prefix args
-                    | exp_prefix COLON NAME args'''
+    '''call_function : exp_prefix args
+                     | exp_prefix COLON NAME args'''
 
 
 # definição de args
 def p_args(p):
-    ''' args : LPAREN list_exp RPAREN
-              | construct_table
-              | cadeia'''
+    ''' args : LPAREN list_exps RPAREN
+             | construct_table'''
 
 
 # definição de deffunção
@@ -144,7 +146,7 @@ def p_construct_table(p):
 
 # definição de listadecampos
 def p_list_fields(p):
-    '''list_fields : field LBRACE separator_fields field RPARECE
+    '''list_fields : field separator_fields field
                    | separator_fields'''
 
 
@@ -163,7 +165,7 @@ def p_separator_fields(p):
 
 # definição de variável local
 def p_local_var(p):
-    '''local_var : LOCAL list_names ATRIB list_exp'''
+    '''local_var : LOCAL list_names ATRIB list_exps'''
 
 
 # definição de opbin
@@ -188,7 +190,7 @@ def p_op_bin(p):
 # definição de opunária
 def p_op_unary(p):
     '''op_unary : MINUS
-                | not
+                | NOT
                 | TAG'''
 
 
@@ -204,7 +206,7 @@ def p_if(p):
 
 def p_else_ifs(p):
     '''else_ifs : else_ifs else_if
-              | else_if'''
+                | else_if'''
 
 
 def p_else_if(p):
@@ -228,7 +230,7 @@ def p_struct_for(p):
 
 # definicao de forin
 def p_struct_for_in(p):
-    '''struct_for_in : FOR list_names IN listExp DO block END'''
+    '''struct_for_in : FOR list_names IN list_exps DO block END'''
 
 
 # definição de repeat
@@ -238,7 +240,8 @@ def p_struct_repeat(p):
 
 # definicao de funcao local
 def p_local_function(p):
-    '''local_function : FUCTION name_function body_function'''
+    '''local_function : FUNCTION name_function body_function'''
+
 
 # definicao de error
 def p_error(p):
