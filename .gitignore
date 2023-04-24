@@ -1,7 +1,8 @@
 # Arquivos gerados pelo PLY
 __pycache__/
 *.pyc
+*.pyo
 *.out
-*.output
-*.tab.*
-
+*.parsetab.py
+*.parsetab.pyc
+*.parser.out
