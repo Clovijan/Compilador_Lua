@@ -21,11 +21,7 @@ return 1;
 mytable.myfunction()
 
 -- Example 7: Assigning to a list of variables
-a, b, c = 1, 2, 3;
-
--- Example 8: Using a table index to access a variable
-mytable["mykey"] = 1;
-
+a, b, c = 1, 2, 3
 
 local minhaVariavel = "Hello World!"
 -- Definindo uma variável booleana
