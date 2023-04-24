@@ -1,3 +1,12 @@
 {
-  "files": {}
+  "files": {
+    "COMPILADOR_LUA/ExpressionLanguageLex.py": [
+      {
+        "id": "e4effd33-80ec-4d5c-94ab-c322d41d7f42",
+        "line": 92,
+        "version": 168,
+        "index": 1726
+      }
+    ]
+  }
 }

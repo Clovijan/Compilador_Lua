@@ -21,7 +21,7 @@ def p_block(p):
 
 # definição de comando
 def p_command(p):
-    '''command : COMMA
+    '''command : SEMICOLON
                | list_vars ATRIB list_exps
                | call_function
                | rotulo
@@ -33,16 +33,15 @@ def p_command(p):
                | if
                | struct_for
                | struct_for_in
-               | function
-               | local_function
+               | def_function
                | local_var'''
 
 
 # definição de comandret
 def p_command_ret(p):
     '''command_ret : RETURN
-                 | RETURN list_exps
-                 | RETURN list_exps COMMA'''
+                   | RETURN list_exps
+                   | RETURN list_exps SEMICOLON'''
 
 
 # definição de rótulo
@@ -59,8 +58,7 @@ def p_name_function(p):
 
 # definição de listavars
 def p_list_vars(p):
-    '''list_vars : var 
-                 | var SEMICOLON list_vars'''
+    '''list_vars : var COMMA var'''
 
 
 # definição de var
@@ -72,20 +70,20 @@ def p_var(p):
 
 def p_prefix_exp(p):
     ''' prefix_exp : var
-                 | call_function 
-                 | LPAREN exp RPAREN'''
+                   | call_function 
+                   | LPAREN exp RPAREN'''
 
 
 # definição de listanomes
 def p_list_names(p):
-    '''list_names : NAME 
-                  | NAME COMMA list_names'''
+    '''list_names : NAME COMMA list_names
+                  | NAME'''
 
 
 # definição de listaexps
 def p_list_exps(p):
-    '''list_exps : exp 
-                 | exp COMMA list_exps'''
+    '''list_exps : exp COMMA list_exps
+                 | exp'''
 
 
 # definição de exp
@@ -100,7 +98,7 @@ def p_exp(p):
            | exp_prefix
            | construct_table
            | exp op_bin exp
-           | op_unary exp'''
+           | exp op_unary exp'''
 
 
 # definição de expprefixo
@@ -124,7 +122,8 @@ def p_args(p):
 
 # definição de deffunção
 def p_def_function(p):
-    '''def_function : FUNCTION body_function'''
+    '''def_function : function 
+                    | local_function'''
 
 
 # definição de corpofunção
@@ -135,29 +134,34 @@ def p_body_function(p):
 # definição de listapars
 def p_list_pars(p):
     '''list_pars : list_names COMMA VARARGS
-                 | VARARGS
-                 | list_names'''
+                 | VARARGS'''
 
 
 # definição de construtortabela
 def p_construct_table(p):
-    '''construct_table : LBRACE list_fields RBRACE'''
+    '''construct_table : LBRACE list_fields RBRACE
+                       | LBRACE RBRACE'''
 
 
 # definição de listadecampos
 def p_list_fields(p):
-    '''list_fields : field separator_fields field
-                   | separator_fields'''
+    '''list_fields : field 
+                   | field separator_fields list_fields
+                   | field_empty
+                   | field_empty separator_fields list_fields'''
 
+# definição de campo vazio
+def p_field_empty(p):
+  '''field_empty : LCOLCH exp RCOLCH
+                 | NAME'''
 
 # definição de campo
 def p_field(p):
     '''field : LCOLCH exp RCOLCH ATRIB exp
-             | NAME ATRIB exp
-             | exp'''
+             | NAME ATRIB exp '''
 
 
-# definição de separadordecampos
+# definição de sepcampos
 def p_separator_fields(p):
     '''separator_fields : COMMA
                         | SEMICOLON'''
@@ -165,13 +169,14 @@ def p_separator_fields(p):
 
 # definição de variável local
 def p_local_var(p):
-    '''local_var : LOCAL list_names ATRIB list_exps'''
+    '''local_var : LOCAL list_names ATRIB list_exps 
+                 | LOCAL NAME ATRIB exp'''
 
 
 # definição de opbin
 def p_op_bin(p):
-    ''' op_bin : PLUS
-               | MINUS
+    ''' op_bin : PLUS 
+               | MINUS 
                | TIMES
                | DIVIDE
                | EXPO 
@@ -196,25 +201,28 @@ def p_op_unary(p):
 
 # definicao de função
 def p_function(p):
-    '''function : FUNCTION name_function body_function'''
+    '''function : FUNCTION body_function'''
 
 
 # definicao de if
 def p_if(p):
-    '''if : IF exp THEN block else_ifs else END'''
+    '''if : IF exp THEN block END
+          | IF exp THEN else
+          | IF exp THEN block else_ifs'''
 
 
 def p_else_ifs(p):
-    '''else_ifs : else_ifs else_if
-                | else_if'''
+    '''else_ifs : else_if else_ifs 
+                | else_if '''
 
 
 def p_else_if(p):
-    '''else_if : ELSEIF exp THEN block'''
+    '''else_if : ELSEIF exp THEN block 
+               | else'''
 
 
 def p_else(p):
-    '''else : ELSE block'''
+    '''else : ELSE block END'''
 
 
 # definicao de while
@@ -240,12 +248,15 @@ def p_struct_repeat(p):
 
 # definicao de funcao local
 def p_local_function(p):
-    '''local_function : FUNCTION name_function body_function'''
+    '''local_function : LOCAL FUNCTION name_function body_function'''
 
 
 # definicao de error
 def p_error(p):
-    print("Syntax error in input!")
+    if p:
+        print(f"Erro de sintaxe na linha {p.lineno}: {p.value}")
+    else:
+        print("Erro de sintaxe: fim de entrada inesperado")
 
 
 # REFERÊNCIAS (NO FINAL DO MANUAL TEM A DEFINIÇÃO DE TUDO)

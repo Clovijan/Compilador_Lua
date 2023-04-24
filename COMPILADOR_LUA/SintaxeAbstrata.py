@@ -12,8 +12,7 @@ class ProgramConcrete(Program):
   def __init__(self, block):
     self.block = block
   def accept(self, visitor):
-    pass
-  
+    return visitor.visitProgramConcrete(self)
   
 '''declaração de bloco'''
 class Block(metaclass=ABCMeta)
@@ -26,7 +25,7 @@ class BlockConcrete(Block):
     self.command = command
     self.command_ret = command_ret
   def accept(self, visitor):
-    pass
+    return visitor.visitBlockConcrete(self)
 
 '''declaração de comando'''
 class Command(metaclass=ABCMeta)
@@ -34,8 +33,23 @@ class Command(metaclass=ABCMeta)
   def accept(self, visitor):
     pass
 
-class CommandConcrete(Command):
-  def __init__(self, )
+class CommandCallFunction(Command):
+  def __init__(self, call_function):
+    self.call_function = call_function
+  def accept(self, visitor):
+    pass
+
+class CommandRotulo(Command):
+  def __init__(self, rotulo):
+    self.rotulo = call_function
+  def accept(self, visitor):
+    pass
+
+class CommandStructWhile(Command):
+  def __init__(self, struct_while):
+    self.struct_while = struct_while
+  def accept(self, visitor):
+    pass
 
 '''declaração de comandoret'''
 class Command_Ret(metaclass=ABCMeta)
