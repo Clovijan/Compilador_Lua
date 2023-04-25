@@ -34,22 +34,50 @@ class Command(metaclass=ABCMeta)
     pass
 
 class CommandCallFunction(Command):
-  def __init__(self, call_function):
-    self.call_function = call_function
+  def __init__(self, exp_prefix, args, name):
+    self.exp_prefix = exp_prefix
+    self.args = args
+    self.name = name
   def accept(self, visitor):
-    pass
+     return visitor.visitCommandCallFunction(self)
 
 class CommandRotulo(Command):
-  def __init__(self, rotulo):
-    self.rotulo = call_function
+  def __init__(self, name):
+    self.name = name
   def accept(self, visitor):
-    pass
+    return visitor.visitCommandRotulo(self)
 
 class CommandStructWhile(Command):
-  def __init__(self, struct_while):
-    self.struct_while = struct_while
+  def __init__(self, exp, block):
+    self.exp = exp
+    self.block = block
   def accept(self, visitor):
-    pass
+    return visitor.visitCommandStructWhile(self)
+
+class CommandStructRepeat(Command):
+  def __init__(self, block, exp):
+    self.block = block
+    self.exp = exp
+  def accept(self, visitor):
+    return visitor.visitCommandStructRepeat(self)
+
+class CommandStructForIn(Command):
+  def __init__(self, struct_for_in):
+    self.struct_for_in = struct_for_in
+  def accept(self, visitor):
+    return visitor.visitCommandStructForIn(self)
+
+class CommandStructFor(Command):
+  def __init__(self, struct_for):
+    self.struct_for = struct_for
+  def accept(self, visitor):
+    return visitor.visitCommandStructFor(self)
+
+class CommandDefFunction(Command):
+  def __init__(self, def_function):
+    self.def_function = def_function
+  def accept(self, visitor):
+    return visitor.visitCommandDefFunction(self)
 
 '''declaração de comandoret'''
 class Command_Ret(metaclass=ABCMeta)

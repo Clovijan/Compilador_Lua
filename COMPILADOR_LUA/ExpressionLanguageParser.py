@@ -150,10 +150,12 @@ def p_list_fields(p):
                    | field_empty
                    | field_empty separator_fields list_fields'''
 
+
 # definição de campo vazio
 def p_field_empty(p):
-  '''field_empty : LCOLCH exp RCOLCH
+    '''field_empty : LCOLCH exp RCOLCH
                  | NAME'''
+
 
 # definição de campo
 def p_field(p):
