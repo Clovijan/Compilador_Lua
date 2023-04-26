@@ -11,4 +11,13 @@ class AbstractVisitor(metaclass=ABCMeta):
     @abstractmethod
     def visitCommandConcrete(self, command): pass
 
+    @abstractmethod
+    def visitCommandCallFunction(self, commandCallFunction): pass
+
+    @abstractmethod
+    def visitCommandRotulo(self, commandRotulo): pass
+
+    @abstractmethod
+    def visitCommandStructWhile(self, commandStructWhile): pass
+
    

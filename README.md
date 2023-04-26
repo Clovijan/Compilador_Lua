@@ -33,6 +33,10 @@ procedimental, orientada a objetos, funcional e orientada a dados. Ela é leve e
 - [LUA.ORG](http://www.lua.org/docs.html)
 - [DOCS PLY](https://www.dabeaz.com/ply/ply.html)
 
+## EXEMPLO
+- [LINGUAGEM SUE](https://github.com/andreluisms/LinguagemSue)
+-
+
 
 ### 👨🏾‍💻 TIME 
 

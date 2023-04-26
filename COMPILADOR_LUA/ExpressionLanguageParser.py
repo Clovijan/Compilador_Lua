@@ -4,8 +4,8 @@ from ExpressionLanguageLex import *
 precedence = (('left', 'OR'), ('left', 'AND'), ('left', 'GT', 'LT', 'GTEQUALS',
                                                 'LTEQUALS', 'EQUALS', 'DIF'),
               ('left', 'CONCAT'), ('left', 'PLUS', 'MINUS'),
-              ('left', 'PERCENTUAL', 'TIMES',
-               'DIVIDE'), ('left', 'NOT', 'TAG'), ('left', 'EXPO'))
+              ('left', 'PERCENTUAL', 'TIMES', 'DIVIDE'),
+              ('left', 'NOT', 'TAG'), ('left', 'EXPO'), ('left', 'default'))
 
 
 # definição de trecho
@@ -88,13 +88,13 @@ def p_list_exps(p):
 
 # definição de exp
 def p_exp(p):
-    '''exp : NIL
-           | FALSE
-           | TRUE
-           | NUMBER
-           | STRING
-           | VARARGS
-           | def_function
+    '''exp : NIL %prec default
+           | FALSE %prec default
+           | TRUE %prec default
+           | NUMBER %prec default
+           | STRING %prec default
+           | VARARGS %prec default
+           | def_function %prec default
            | exp_prefix
            | construct_table
            | exp op_bin exp
@@ -150,10 +150,12 @@ def p_list_fields(p):
                    | field_empty
                    | field_empty separator_fields list_fields'''
 
+
 # definição de campo vazio
 def p_field_empty(p):
-  '''field_empty : LCOLCH exp RCOLCH
+    '''field_empty : LCOLCH exp RCOLCH
                  | NAME'''
+
 
 # definição de campo
 def p_field(p):
@@ -175,7 +177,7 @@ def p_local_var(p):
 
 # definição de opbin
 def p_op_bin(p):
-    ''' op_bin : PLUS 
+    ''' op_bin : PLUS
                | MINUS 
                | TIMES
                | DIVIDE
