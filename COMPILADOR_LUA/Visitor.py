@@ -41,8 +41,14 @@ class Visitor(AbstractVisitor):
         print ('until ', end='' )
         commandStructRepeat.exp.accept(self)
 
-    def visitCommandStructForIn(self, commandStructForIn):
-        commandStructForIn.struct_for_in.accept(self)
+   def visitCommandStructForIn(self, commandStructForIn):
+        print (blank(), 'for ', end='', sep='')  
+        commandStructForIn.list_names.accept(self)
+        print ('in ', end='', sep='') 
+        commandStructForIn.list_exps.accept(self)
+        print ('do ', end='', sep='') 
+        commandStructForIn.block.accept(self)
+        print ('end')
 
     def visitCommandStructFor(self, commandStructFor):
         commandStructFor.struct_for.accept(self)

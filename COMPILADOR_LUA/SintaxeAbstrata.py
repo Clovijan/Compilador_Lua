@@ -62,8 +62,10 @@ class CommandStructRepeat(Command):
     return visitor.visitCommandStructRepeat(self)
 
 class CommandStructForIn(Command):
-  def __init__(self, struct_for_in):
-    self.struct_for_in = struct_for_in
+  def __init__(self, list_names, list_exps, block):
+    self.list_names = list_names
+    self.list_exps = list_exps
+    self.block = block
   def accept(self, visitor):
     return visitor.visitCommandStructForIn(self)
 
