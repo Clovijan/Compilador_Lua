@@ -1,8 +1,0 @@
-# Arquivos gerados pelo PLY
-__pycache__/
-*.pyc
-*.pyo
-*.out
-*.parsetab.py
-*.parsetab.pyc
-*.parser.out
