@@ -5,15 +5,15 @@ lexer = lex.lex()
 
 data = '''
 -- Example 1: Simple program
-a = 1;
+a = 1
 -- Example 2: Block with two commands
-a = 1;
-b = 2;
+a = 1
+b = 2
 -- Example 3: Command that assigns multiple values to multiple variables
-a, b, c = 1, 2, 3;
+a, b, c = 1, 2, 3
 
 -- Example 4: Command that returns a single value
-return 1;
+return 1
 -- Example 5: Label definition
 ::mylabel::
 

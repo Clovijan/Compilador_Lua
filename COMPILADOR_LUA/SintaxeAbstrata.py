@@ -41,12 +41,6 @@ class CommandCallFunction(Command):
   def accept(self, visitor):
      return visitor.visitCommandCallFunction(self)
 
-class CommandRotulo(Command):
-  def __init__(self, name):
-    self.name = name
-  def accept(self, visitor):
-    return visitor.visitCommandRotulo(self)
-
 class CommandStructWhile(Command):
   def __init__(self, exp, block):
     self.exp = exp
@@ -70,37 +64,41 @@ class CommandStructForIn(Command):
     return visitor.visitCommandStructForIn(self)
 
 class CommandStructFor(Command):
-  def __init__(self, struct_for):
-    self.struct_for = struct_for
+  def __init__(self, name, exp, exp2, block):
+    self.name = name
+    self.exp = exp
+    self.exp2 = exp
+    self.block = block
   def accept(self, visitor):
     return visitor.visitCommandStructFor(self)
 
 class CommandDefFunction(Command):
-  def __init__(self, def_function):
-    self.def_function = def_function
+  def __init__(self, function, local_function):
+    self.function = function
+    self.local_function = local_function
   def accept(self, visitor):
     return visitor.visitCommandDefFunction(self)
 
 '''declaração de comandoret'''
-class Command_Ret(metaclass=ABCMeta)
+class CommandRet(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
-'''declaração de rótulo'''
-class Rotulo(metaclass=ABCMeta)
-  @abstractmethod
+class CommandRetConcrete(CommandRet)
+  def __init__(self, list_exps)
+    self.list_exps = list_exps
   def accept(self, visitor):
-    pass
+    return visitor.visitCommandRetConcrete(self)
 
 '''declaração de nomefunção'''
-class Name_Function(metaclass=ABCMeta)
+class NameFunction(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
     
 '''declaração de listvars'''
-class List_vars(metaclass=ABCMeta)
+class Listvars(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
@@ -112,13 +110,13 @@ class Var(metaclass=ABCMeta)
     pass
 
 '''declaração de listadenomes'''
-class List_Names(metaclass=ABCMeta)
+class ListNames(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de listaexp'''
-class List_Exps(metaclass=ABCMeta)
+class ListExps(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
@@ -130,13 +128,13 @@ class Exp(metaclass=ABCMeta)
     pass
 
 '''declaração de expprefixo'''
-class Exp_Prefix(metaclass=ABCMeta)
+class ExpPrefix(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de chamdadafuncao'''
-class Call_Function(metaclass=ABCMeta)
+class CallFunction(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
@@ -148,31 +146,31 @@ class Args(metaclass=ABCMeta)
     pass
 
 '''declaração de deffuncao'''
-class Def_Function(metaclass=ABCMeta)
+class DefFunction(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de corpofuncao'''
-class Body_Function(metaclass=ABCMeta)
+class BodyFunction(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de listapars'''
-class List_Pars(metaclass=ABCMeta)
+class ListPars(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de construtortabela'''
-class Construct_Table(metaclass=ABCMeta)
+class ConstructTable(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de listadecampos'''
-class list_fields(metaclass=ABCMeta)
+class listfields(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
@@ -184,25 +182,25 @@ class Field(metaclass=ABCMeta)
     pass
 
 '''declaração de separadordecampos'''
-class Separator_Fields(metaclass=ABCMeta)
+class SeparatorFields(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de variável local'''
-class Local_Var(metaclass=ABCMeta)
+class LocalVar(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de opbin'''
-class Op_Bin(metaclass=ABCMeta)
+class OpBin(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de opunário'''
-class Op_Unary(metaclass=ABCMeta)
+class OpUnary(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
@@ -220,31 +218,31 @@ class If(metaclass=ABCMeta)
     pass
 
 '''declaração de while'''
-class Struct_While(metaclass=ABCMeta)
+class StructWhile(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de for'''
-class Struct_For(metaclass=ABCMeta)
+class StructFor(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de forin'''
-class Struct_For_In(metaclass=ABCMeta)
+class StructForIn(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de repeat'''
-class struct_repeat(metaclass=ABCMeta)
+class structRepeat(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de funcaolocal'''
-class Local_Function(metaclass=ABCMeta)
+class LocalFunction(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass

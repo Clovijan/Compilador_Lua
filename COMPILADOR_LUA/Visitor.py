@@ -23,11 +23,6 @@ class Visitor(AbstractVisitor):
         commandCallFunction.args.accept(self)
         commandCallFunction.name.accept(self)
 
-    def visitCommandRotulo(self, commandRotulo):
-        print ('::', end='')
-        commandRotulo.name.accept(self)
-        print ('::', end='')
-
     def visitCommandStructWhile(self, commandStructWhile):
         print (blank(), 'while ', end='', sep='')
         commandStructWhile.exp.accept(self)
@@ -51,7 +46,18 @@ class Visitor(AbstractVisitor):
         print ('end')
 
     def visitCommandStructFor(self, commandStructFor):
-        commandStructFor.struct_for.accept(self)
+        print(blank(), 'for ', end='', sep='')
+        commandStructFor.name.accept(self)
+        print(' = ', end='', sep='')
+        commandStructFor.exp.accept(self)
+        print(' == ', end='', sep='')
+        commandStructFor.exp.accept(self)
+        print(' do ', end='', sep='')
+        commandStructFor.block.accept(self)
+        print(' end ', end='', sep='')
 
-    def visitCommandDefFunction(self, commandDefFunction):
-        commandDefFunction.def_function.accept(self)
+     def visitCommandDefFunction(self, commandDefFunction):
+        commandDefFunction.function.accept(self)
+        commandDefFunction.local_function.accept(self)
+
+     

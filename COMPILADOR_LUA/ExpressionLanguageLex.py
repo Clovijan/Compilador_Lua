@@ -9,7 +9,6 @@ reserved = {
     'do': 'DO',
     'end': 'END',
     'if': 'IF',
-    'goto': 'GOTO',
     'true': 'TRUE',
     'false': 'FALSE',
     'function': 'FUNCTION',

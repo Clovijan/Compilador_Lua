@@ -5,7 +5,7 @@ precedence = (('left', 'OR'), ('left', 'AND'), ('left', 'GT', 'LT', 'GTEQUALS',
                                                 'LTEQUALS', 'EQUALS', 'DIF'),
               ('left', 'CONCAT'), ('left', 'PLUS', 'MINUS'),
               ('left', 'PERCENTUAL', 'TIMES', 'DIVIDE'),
-              ('left', 'NOT', 'TAG'), ('left', 'EXPO'), ('left', 'default'))
+              ('left', 'NOT', 'TAG'), ('left', 'EXPO'))
 
 
 # definição de trecho
@@ -26,7 +26,6 @@ def p_command(p):
                | call_function
                | rotulo
                | BREAK
-               | GOTO NAME
                | DO block END
                | struct_while
                | struct_repeat
@@ -35,6 +34,11 @@ def p_command(p):
                | struct_for_in
                | def_function
                | local_var'''
+    
+# criar definição de lista de comandos
+def p_list_command(p):
+  '''list_command : command list_command
+                  | command'''
 
 
 # definição de comandret
@@ -58,7 +62,8 @@ def p_name_function(p):
 
 # definição de listavars
 def p_list_vars(p):
-    '''list_vars : var COMMA var'''
+    '''list_vars : var 
+                 | var COMMA list_vars'''
 
 
 # definição de var
@@ -88,17 +93,31 @@ def p_list_exps(p):
 
 # definição de exp
 def p_exp(p):
-    '''exp : NIL %prec default
-           | FALSE %prec default
-           | TRUE %prec default
-           | NUMBER %prec default
-           | STRING %prec default
-           | VARARGS %prec default
-           | def_function %prec default
+    '''exp : NIL 
+           | FALSE
+           | TRUE 
+           | NUMBER
+           | STRING 
+           | VARARGS 
+           | def_function 
            | exp_prefix
            | construct_table
-           | exp op_bin exp
-           | exp op_unary exp'''
+           | exp op_unary exp
+           | exp PLUS exp
+           | exp MINUS exp
+           | exp TIMES exp
+           | exp DIVIDE exp
+           | exp EXPO exp
+           | exp PERCENTUAL exp
+           | exp CONCAT exp
+           | exp LT exp
+           | exp LTEQUALS exp
+           | exp GT exp
+           | exp GTEQUALS exp
+           | exp EQUALS exp
+           | exp DIF exp
+           | exp AND exp
+           | exp OR exp'''
 
 
 # definição de expprefixo
@@ -124,7 +143,6 @@ def p_args(p):
 def p_def_function(p):
     '''def_function : function 
                     | local_function'''
-
 
 # definição de corpofunção
 def p_body_function(p):
@@ -154,7 +172,7 @@ def p_list_fields(p):
 # definição de campo vazio
 def p_field_empty(p):
     '''field_empty : LCOLCH exp RCOLCH
-                 | NAME'''
+                   | NAME'''
 
 
 # definição de campo
@@ -174,26 +192,6 @@ def p_local_var(p):
     '''local_var : LOCAL list_names ATRIB list_exps 
                  | LOCAL NAME ATRIB exp'''
 
-
-# definição de opbin
-def p_op_bin(p):
-    ''' op_bin : PLUS
-               | MINUS 
-               | TIMES
-               | DIVIDE
-               | EXPO 
-               | PERCENTUAL
-               | CONCAT
-               | LT
-               | LTEQUALS
-               | GT
-               | GTEQUALS
-               | EQUALS
-               | DIF
-               | AND
-               | OR'''
-
-
 # definição de opunária
 def p_op_unary(p):
     '''op_unary : MINUS
@@ -209,18 +207,18 @@ def p_function(p):
 # definicao de if
 def p_if(p):
     '''if : IF exp THEN block END
-          | IF exp THEN else
-          | IF exp THEN block else_ifs'''
+          | IF exp THEN else'''
+#         | IF exp THEN block else_ifs'''
 
 
-def p_else_ifs(p):
-    '''else_ifs : else_if else_ifs 
-                | else_if '''
+# def p_else_ifs(p):
+#     '''else_ifs : else_if else_ifs 
+#                 | else_if '''
 
 
-def p_else_if(p):
-    '''else_if : ELSEIF exp THEN block 
-               | else'''
+# def p_else_if(p):
+#     '''else_if : ELSEIF exp THEN block 
+#               | else'''
 
 
 def p_else(p):
@@ -236,8 +234,7 @@ def p_struct_while(p):
 def p_struct_for(p):
     '''struct_for : FOR NAME ATRIB exp COMMA exp DO block END
                   | FOR NAME ATRIB exp COMMA exp COMMA exp DO block END'''
-
-
+    
 # definicao de forin
 def p_struct_for_in(p):
     '''struct_for_in : FOR list_names IN list_exps DO block END'''
