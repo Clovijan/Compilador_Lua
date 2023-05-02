@@ -16,7 +16,8 @@ def p_program(p):
 # definição de bloco
 def p_block(p):
     '''block : command
-             | command command_ret'''
+             | command block 
+             '''
 
 
 # definição de comando
@@ -33,7 +34,8 @@ def p_command(p):
                | struct_for
                | struct_for_in
                | def_function
-               | local_var'''
+               | local_var
+               | command_ret'''
     
 # criar definição de lista de comandos
 def p_list_command(p):
@@ -102,7 +104,9 @@ def p_exp(p):
            | def_function 
            | exp_prefix
            | construct_table
-           | exp op_unary exp
+           | TAG exp
+           | MINUS exp
+           | NOT exp
            | exp PLUS exp
            | exp MINUS exp
            | exp TIMES exp
@@ -123,7 +127,7 @@ def p_exp(p):
 # definição de expprefixo
 def p_exp_prefix(p):
     '''exp_prefix : VAR 
-                  | call_function
+                  | call_function           # NAME '(' args ')'
                   | LPAREN exp RPAREN'''
 
 
@@ -192,11 +196,11 @@ def p_local_var(p):
     '''local_var : LOCAL list_names ATRIB list_exps 
                  | LOCAL NAME ATRIB exp'''
 
-# definição de opunária
-def p_op_unary(p):
-    '''op_unary : MINUS
-                | NOT
-                | TAG'''
+# # definição de opunária
+# def p_op_unary(p):
+#     '''op_unary : MINUS
+#                 | NOT
+#                 | TAG'''
 
 
 # definicao de função
