@@ -211,9 +211,8 @@ class Args(metaclass=ABCMeta)
 
 '''declaração de args'''
 class ArgsConcrete(Args)
-  def __init__(self, list_exps, construct_table)
+  def __init__(self, list_exps)
     self.list_exps = list_exps
-    self.construct_table = construct_table
   def accept(self, visitor):
     pass
 
@@ -232,12 +231,6 @@ class BodyFunctionConcrete(BodyFunction)
 
 '''declaração de listapars'''
 class ListPars(metaclass=ABCMeta)
-  @abstractmethod
-  def accept(self, visitor):
-    pass
-
-'''declaração de construtortabela'''
-class ConstructTable(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass

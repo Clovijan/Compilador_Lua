@@ -10,20 +10,20 @@ precedence = (('left', 'OR'), ('left', 'AND'), ('left', 'GT', 'LT', 'GTEQUALS',
 
 # definição de trecho
 def p_program(p):
-    '''program : block'''
+    '''program : block
+               | function 
+               | function program'''
 
 
 # definição de bloco
 def p_block(p):
     '''block : command
-             | command block 
-             '''
+             | command block'''
 
 
 # definição de comando
 def p_command(p):
-    '''command : SEMICOLON
-               | list_vars ATRIB list_exps
+    '''command : list_vars ATRIB list_exps
                | call_function
                | rotulo
                | BREAK
@@ -33,16 +33,15 @@ def p_command(p):
                | if
                | struct_for
                | struct_for_in
-               | def_function
-               | local_var
+               | LOCAL list_vars ATRIB list_exps
                | command_ret'''
 
 
 # definição de comandret
 def p_command_ret(p):
-    '''command_ret : RETURN
+    '''command_ret : RETURN SEMICOLON
                    | RETURN list_exps
-                   | RETURN list_exps SEMICOLON'''
+                   | RETURN list_exps SEMICOLON '''
 
 
 # definição de rótulo
@@ -53,7 +52,6 @@ def p_rotulo(p):
 # definicao de nomefuncao
 def p_name_function(p):
     '''name_function : NAME
-                     | NAME DOT NAME
                      | NAME COLON NAME'''
 
 
@@ -66,20 +64,18 @@ def p_list_vars(p):
 # definição de var
 def p_var(p):
     '''var : NAME 
-           | prefix_exp LCOLCH exp RCOLCH
-           | prefix_exp DOT NAME'''
+           | prefix_exp LCOLCH exp RCOLCH'''
 
 
 # deifnicção de prefixexp
 def p_prefix_exp(p):
     ''' prefix_exp : var
-                   | call_function 
-                   | LPAREN exp RPAREN'''
+                   | call_function '''
 
 
 # definição de listanomes
 def p_list_names(p):
-    '''list_names : NAME COMMA list_names
+    '''list_names : list_names COMMA NAME  
                   | NAME'''
 
 
@@ -98,8 +94,7 @@ def p_exp(p):
            | STRING 
            | VARARGS 
            | def_function 
-           | exp_prefix
-           | construct_table
+           | prefix_exp
            | TAG exp
            | MINUS exp
            | NOT exp
@@ -120,28 +115,20 @@ def p_exp(p):
            | exp OR exp'''
 
 
-# definição de expprefixo
-def p_exp_prefix(p):
-    '''exp_prefix : var 
-                  | LPAREN exp RPAREN'''
-
-
 # definição de chamadafuncao
 def p_call_function(p):
-    '''call_function : exp_prefix args'''
+    '''call_function : prefix_exp args'''
 
 
 # definição de args
 def p_args(p):
     ''' args : LPAREN list_exps RPAREN
-             | LPAREN RPAREN
-             | construct_table'''
+             | LPAREN RPAREN'''
 
 
 # definição de deffunção
 def p_def_function(p):
-    '''def_function : function 
-                    | local_function'''
+    '''def_function : function'''
 
 
 # definição de corpofunção
@@ -154,12 +141,6 @@ def p_list_pars(p):
     '''list_pars : list_names
                  | list_names COMMA VARARGS
                  | VARARGS'''
-
-
-# definição de construtortabela
-def p_construct_table(p):
-    '''construct_table : LBRACE list_fields RBRACE
-                       | LBRACE RBRACE'''
 
 
 # definição de listadecampos
@@ -194,9 +175,11 @@ def p_local_var(p):
                  | LOCAL list_names
                  | LOCAL NAME ATRIB exp'''
 
+
 # definicao de função
 def p_function(p):
     '''function : FUNCTION name_function body_function'''
+
 
 # definicao de if
 def p_if(p):
@@ -204,9 +187,11 @@ def p_if(p):
           | IF exp THEN block else
           | IF exp THEN block else_if else'''
 
+
 def p_else_if(p):
     '''else_if : ELSEIF exp THEN block
                | ELSEIF exp THEN block else_if'''
+
 
 def p_else(p):
     '''else : ELSE block END'''
@@ -231,11 +216,6 @@ def p_struct_for_in(p):
 # definição de repeat
 def p_struct_repeat(p):
     '''struct_repeat : REPEAT block UNTIL exp'''
-
-
-# definicao de funcao local
-def p_local_function(p):
-    '''local_function : LOCAL FUNCTION NAME body_function'''
 
 
 # definicao de error

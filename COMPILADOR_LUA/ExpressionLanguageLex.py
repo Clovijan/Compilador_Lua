@@ -22,7 +22,6 @@ reserved = {
     'then': 'THEN',
     'until': 'UNTIL',
     'while': 'WHILE',
-    'var': 'VAR',
     'string': 'STRING',
 }
 # Lista de tokens

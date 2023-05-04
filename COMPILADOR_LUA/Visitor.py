@@ -100,21 +100,9 @@ class Visitor(AbstractVisitor):
       commandCallFunction.exp_prefix.accept(self)
       commandCallFunction.args.accept(self)
 
-    def visitCommandCallFunction(self, commandCallFunction):
-      commandCallFunction.exp_prefix.accept(self)
-      commandCallFunction.args.accept(self)
-
     def visitCommandArgs(self, commandArgs):
       commandArgs.list_exps.accept(self)
-      commandArgs.construct_table.accept(self)
 
-    def visitCommandCallFunction(self, commandCallFunction):
-      commandCallFunction.exp_prefix.accept(self)
-      commandCallFunction.args.accept(self)
-
-    def visitCommandBodyFunction(self, commandBodyFunction):
-      commandBodyFunction.list_pars.accept(self)
-      commandBodyFunction.block.accept(self)
   
     
        
