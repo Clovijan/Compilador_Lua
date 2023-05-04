@@ -4,8 +4,8 @@ from ExpressionLanguageLex import *
 precedence = (('left', 'OR'), ('left', 'AND'), ('left', 'GT', 'LT', 'GTEQUALS',
                                                 'LTEQUALS', 'EQUALS', 'DIF'),
               ('left', 'CONCAT'), ('left', 'PLUS', 'MINUS'),
-              ('left', 'PERCENTUAL', 'TIMES', 'DIVIDE'),
-              ('left', 'NOT', 'TAG'), ('left', 'EXPO'))
+              ('left', 'PERCENTUAL', 'TIMES',
+               'DIVIDE'), ('left', 'NOT', 'TAG'), ('left', 'EXPO'))
 
 
 # definição de trecho
@@ -36,11 +36,6 @@ def p_command(p):
                | def_function
                | local_var
                | command_ret'''
-    
-# criar definição de lista de comandos
-def p_list_command(p):
-  '''list_command : command list_command
-                  | command'''
 
 
 # definição de comandret
@@ -75,6 +70,7 @@ def p_var(p):
            | prefix_exp DOT NAME'''
 
 
+# deifnicção de prefixexp
 def p_prefix_exp(p):
     ''' prefix_exp : var
                    | call_function 
@@ -126,20 +122,19 @@ def p_exp(p):
 
 # definição de expprefixo
 def p_exp_prefix(p):
-    '''exp_prefix : VAR 
-                  | call_function           # NAME '(' args ')'
+    '''exp_prefix : var 
                   | LPAREN exp RPAREN'''
 
 
 # definição de chamadafuncao
 def p_call_function(p):
-    '''call_function : exp_prefix args
-                     | exp_prefix COLON NAME args'''
+    '''call_function : exp_prefix args'''
 
 
 # definição de args
 def p_args(p):
     ''' args : LPAREN list_exps RPAREN
+             | LPAREN RPAREN
              | construct_table'''
 
 
@@ -148,6 +143,7 @@ def p_def_function(p):
     '''def_function : function 
                     | local_function'''
 
+
 # definição de corpofunção
 def p_body_function(p):
     '''body_function : LPAREN list_pars RPAREN block END'''
@@ -155,7 +151,8 @@ def p_body_function(p):
 
 # definição de listapars
 def p_list_pars(p):
-    '''list_pars : list_names COMMA VARARGS
+    '''list_pars : list_names
+                 | list_names COMMA VARARGS
                  | VARARGS'''
 
 
@@ -193,37 +190,23 @@ def p_separator_fields(p):
 
 # definição de variável local
 def p_local_var(p):
-    '''local_var : LOCAL list_names ATRIB list_exps 
+    '''local_var : LOCAL list_names ATRIB list_exps
+                 | LOCAL list_names
                  | LOCAL NAME ATRIB exp'''
-
-# # definição de opunária
-# def p_op_unary(p):
-#     '''op_unary : MINUS
-#                 | NOT
-#                 | TAG'''
-
 
 # definicao de função
 def p_function(p):
-    '''function : FUNCTION body_function'''
-
+    '''function : FUNCTION name_function body_function'''
 
 # definicao de if
 def p_if(p):
     '''if : IF exp THEN block END
-          | IF exp THEN else'''
-#         | IF exp THEN block else_ifs'''
+          | IF exp THEN block else
+          | IF exp THEN block else_if else'''
 
-
-# def p_else_ifs(p):
-#     '''else_ifs : else_if else_ifs 
-#                 | else_if '''
-
-
-# def p_else_if(p):
-#     '''else_if : ELSEIF exp THEN block 
-#               | else'''
-
+def p_else_if(p):
+    '''else_if : ELSEIF exp THEN block
+               | ELSEIF exp THEN block else_if'''
 
 def p_else(p):
     '''else : ELSE block END'''
@@ -238,7 +221,8 @@ def p_struct_while(p):
 def p_struct_for(p):
     '''struct_for : FOR NAME ATRIB exp COMMA exp DO block END
                   | FOR NAME ATRIB exp COMMA exp COMMA exp DO block END'''
-    
+
+
 # definicao de forin
 def p_struct_for_in(p):
     '''struct_for_in : FOR list_names IN list_exps DO block END'''
@@ -251,7 +235,7 @@ def p_struct_repeat(p):
 
 # definicao de funcao local
 def p_local_function(p):
-    '''local_function : LOCAL FUNCTION name_function body_function'''
+    '''local_function : LOCAL FUNCTION NAME body_function'''
 
 
 # definicao de error

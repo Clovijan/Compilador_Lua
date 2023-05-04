@@ -47,4 +47,4 @@ end
 lexer.input(data)
 parser = yacc.yacc()
 result = parser.parse(debug=True)
-print ("#realiza a analise semantica")
+print("#realiza a analise semantica")

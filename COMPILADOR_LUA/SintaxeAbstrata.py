@@ -96,6 +96,13 @@ class NameFunction(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
+
+'''declaração de nomefunção'''
+class NameFunctionConcrete(name)
+  def __init__(self, name)
+    self.name = name
+  def accept(self, visitor):
+    return visitor.visitCommandNameFunction(self)
     
 '''declaração de listvars'''
 class Listvars(metaclass=ABCMeta)
@@ -103,11 +110,27 @@ class Listvars(metaclass=ABCMeta)
   def accept(self, visitor):
     pass
 
+class ListvarsConcrete(ListVars)
+  def __init__(self, var, list_vars)
+    self.var = var
+    self.list_vars = list_vars
+  def accept(self, visitor):
+    return visitor.visitCommandListvars(self)
+
 '''declaração de var'''
 class Var(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
+
+'''declaração de var'''
+class VarConcrete(Var)
+  def __init__(self, name, prefix_exp, exp)
+    self.name = name
+    self.prefix_exp = prefix_exp
+    self.exp = exp
+  def accept(self, visitor):
+    return visitor.visitCommandVar(self)
 
 '''declaração de listadenomes'''
 class ListNames(metaclass=ABCMeta)
@@ -115,9 +138,23 @@ class ListNames(metaclass=ABCMeta)
   def accept(self, visitor):
     pass
 
+class ListNamesConcrete(ListNames)
+  def __init__(self, name, list_names)
+    self.name = name
+    self.list_names = list_names
+  def accept(self, visitor):
+    return visitor.visitListNames(self)
+
 '''declaração de listaexp'''
 class ListExps(metaclass=ABCMeta)
   @abstractmethod
+  def accept(self, visitor):
+    pass
+    
+class ListExpsConcrete(ListExps)
+  def __init__(self, exp, list_exps)
+    self.name = name
+    self.list_names = list_names
   def accept(self, visitor):
     pass
 
@@ -127,9 +164,29 @@ class Exp(metaclass=ABCMeta)
   def accept(self, visitor):
     pass
 
+class ExpDefFunctionConcrete(Exp)
+  def __init__(self, def_function)
+    self.def_function = def_function
+  def accept(self, visitor):
+    pass
+
+class ExpConcrete(Exp)
+  def __init__(self, exp, exp2)
+    self.exp = exp
+    self.exp2 = exp2
+  def accept(self, visitor):
+    pass
+
 '''declaração de expprefixo'''
 class ExpPrefix(metaclass=ABCMeta)
   @abstractmethod
+  def accept(self, visitor):
+    pass
+
+class ExpPrefixConcrete(Exp)
+  def __init__(self,var, exp)
+    self.var = var
+    self.exp = exp
   def accept(self, visitor):
     pass
 
@@ -139,21 +196,37 @@ class CallFunction(metaclass=ABCMeta)
   def accept(self, visitor):
     pass
 
+class CallFunctionConcrete(CallFunction)
+  def __init__(self, exp_prefix, args)
+    self.exp_prefix = exp_prefix
+    self.args = args
+  def accept(self, visitor):
+    pass
+
 '''declaração de args'''
 class Args(metaclass=ABCMeta)
   @abstractmethod
   def accept(self, visitor):
     pass
 
-'''declaração de deffuncao'''
-class DefFunction(metaclass=ABCMeta)
-  @abstractmethod
+'''declaração de args'''
+class ArgsConcrete(Args)
+  def __init__(self, list_exps, construct_table)
+    self.list_exps = list_exps
+    self.construct_table = construct_table
   def accept(self, visitor):
     pass
 
 '''declaração de corpofuncao'''
 class BodyFunction(metaclass=ABCMeta)
   @abstractmethod
+  def accept(self, visitor):
+    pass
+
+class BodyFunctionConcrete(BodyFunction)
+  def __init__(self, list_pars, block)
+    self.list_pars = list_pars
+    self.block = block
   def accept(self, visitor):
     pass
 
@@ -211,6 +284,15 @@ class Function(metaclass=ABCMeta)
   def accept(self, visitor):
     pass
 
+'''declaração de função'''
+class FunctionConcrete(function)
+  def __init__(self, function, name_function, body_function)
+    self.function = function
+    self.name_function= name_function
+    self.body_function = body_function
+  def accept(self, visitor):
+    return visitor.visitCommandFunctionConcrete(self)
+  
 '''declaração de if'''
 class If(metaclass=ABCMeta)
   @abstractmethod
