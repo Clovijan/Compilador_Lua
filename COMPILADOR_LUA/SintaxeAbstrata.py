@@ -3,32 +3,32 @@ from abc import ABCMeta
 from Visitor import Visitor
 
 ''' declaração de trecho'''
-class Program(metaclass=ABCMeta)
+class Program(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
     
 class ProgramConcrete(Program):
-  def __init__(self, block):
+  def __init__(self, block, function):
     self.block = block
+    self.function = function
   def accept(self, visitor):
     return visitor.visitProgramConcrete(self)
   
 '''declaração de bloco'''
-class Block(metaclass=ABCMeta)
+class Block(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
 class BlockConcrete(Block):
-  def __init__(self, command, command_ret):
+  def __init__(self, command):
     self.command = command
-    self.command_ret = command_ret
   def accept(self, visitor):
     return visitor.visitBlockConcrete(self)
 
 '''declaração de comando'''
-class Command(metaclass=ABCMeta)
+class Command(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass

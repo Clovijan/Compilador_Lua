@@ -12,10 +12,10 @@ def blank():
 class Visitor(AbstractVisitor):
     def visitProgramConcrete(self, programConcrete):
       programConcrete.block.accept(self)
+      programConcrete.function.accept(self)
 
     def visitBlockConcrete(self, blockConcrete):
       blockConcrete.command.accept(self)
-      blockConcrete.command_ret.accept(self)
 
   #incompleto esse
     def visitCommandCallFunction(self, commandCallFunction):
@@ -23,18 +23,31 @@ class Visitor(AbstractVisitor):
       commandCallFunction.args.accept(self)
       commandCallFunction.name.accept(self)
 
-    def visitCommandStructWhile(self, commandStructWhile):
-      print (blank(), 'while ', end='', sep='')
-      commandStructWhile.exp.accept(self)
+    def visitCommandWhile(self, commandWhile):
+      print (blank(), 'while', end='', sep='')
+      commandWhile.exp.accept(self)
       print ('do', end='', sep='')
-      commandStructWhile.block.accept(self)
-      print ('end')
+      commandWhile.block.accept(self)
+      print ('end', end='', sep='')
+
+    def visitCommandRotulo(self, commandRotulo):
+      print (blank(), '::', end='', sep='')
+      commandRotulo.name.accept(self)
+      print ('::', end='', sep='')
+
+    def visitCommandDoEnd(self, commandDoEnd):
+      print (blank(), 'do', end='', sep='')
+      commandDoEnd.block.accept(self)
+      print ('end', end='', sep='')
 
     def visitCommandStructRepeat(self, commandStructRepeat):
       print (blank(), 'repeat ', end='', sep='')
       commandStructRepeat.block.accept(self)
       print ('until ', end='' )
       commandStructRepeat.exp.accept(self)
+
+    def visitCommandIf(self, commandIf):
+      print ('if')
 
     def visitCommandStructForIn(self, commandStructForIn):
       print (blank(), 'for ', end='', sep='')  
@@ -95,10 +108,6 @@ class Visitor(AbstractVisitor):
     def visitCommandExpPrefix(self, commandExpPrefix):
       commandExpPrefix.var.accept(self)
       commandExpPrefix.exp.accept(self)
-
-    def visitCommandCallFunction(self, commandCallFunction):
-      commandCallFunction.exp_prefix.accept(self)
-      commandCallFunction.args.accept(self)
 
     def visitCommandArgs(self, commandArgs):
       commandArgs.list_exps.accept(self)
