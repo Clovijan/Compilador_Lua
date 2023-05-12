@@ -13,6 +13,8 @@ def blank():
 class Visitor(AbstractVisitor):
     def visitProgramConcrete(self, programConcrete):
         programConcrete.block.accept(self)
+      
+    def visitProgramConcrete2(self, programConcrete):
         programConcrete.function.accept(self)
 
     def visitBlockConcrete(self, blockConcrete):
@@ -22,7 +24,6 @@ class Visitor(AbstractVisitor):
     def visitCommandCallFunction(self, commandCallFunction):
         commandCallFunction.exp_prefix.accept(self)
         commandCallFunction.args.accept(self)
-        commandCallFunction.name.accept(self)
 
     def visitCommandStructWhile(self, commandWhile):
         print(blank(), 'while', end='', sep='')
@@ -147,9 +148,99 @@ class Visitor(AbstractVisitor):
         commandListExps.exp.accept(self)
         commandListExps.list_exps.accept(self)
 
-    def visitCommandExp(self, commandExp):
+    def visitCommandExpNil(self, commandExp):
+        commandExp.nil.accept(self)
+      
+    def visitCommandExpTrue(self, commandExp):
+        commandExp.true.accept(self)
+
+    def visitCommandExpFalse(self, commandExp):
+        commandExp.false.accept(self)
+
+    def visitCommandExpNumber(self, commandExp):
+        commandExp.number.accept(self)
+
+    def visitCommandExpString(self, commandExp):
+        commandExp.string.accept(self)
+
+    def visitCommandExpTag(self, commandExp):
+        print('tag')
         commandExp.exp.accept(self)
 
+    def visitCommandExpMinus(self, commandExp):
+        commandExp.exp.accept(self)  
+        print('-')
+        commandExp.exp2.accept(self)
+       
+    def visitCommandExpNot(self, commandExp):
+        print('not')
+        commandExp.exp.accept(self)
+
+    def visitCommandExpPlus(self, commandExp):
+        commandExp.exp.accept(self)
+        print('+')
+        commandExp.exp2.accept(self)
+
+    def visitCommandExpDivide(self, commandExp):
+        commandExp.exp.accept(self)
+        print('/')
+        commandExp.exp2.accept(self)
+
+    def visitCommandExpExpo(self, commandExp):
+        commandExp.exp.accept(self)
+        print('^')
+        commandExp.exp2.accept(self)
+
+    def visitCommandExpPercentual(self, commandExp):
+        commandExp.exp.accept(self)
+        print('%')
+        commandExp.exp2.accept(self)
+
+    def visitCommandExpConcat(self, commandExp):
+        commandExp.exp.accept(self)
+        print('..')
+        commandExp.exp2.accept(self)
+
+    def visitCommandExpLt(self, commandExp):
+        commandExp.exp.accept(self)
+        print('<')
+        commandExp.exp2.accept(self)
+
+    def visitCommandExpLtEquals(self, commandExp):
+        commandExp.exp.accept(self)
+        print('<=')
+        commandExp.exp2.accept(self)
+
+    def visitCommandExpGt(self, commandExp):
+        commandExp.exp.accept(self)
+        print('>')
+        commandExp.exp2.accept(self) 
+
+    def visitCommandExpGtEquals(self, commandExp):
+        commandExp.exp.accept(self)
+        print('>=')
+        commandExp.exp2.accept(self)
+
+    def visitCommandExpEquals(self, commandExp):
+        commandExp.exp.accept(self)
+        print('==')
+        commandExp.exp2.accept(self)
+
+    def visitCommandExpDif(self, commandExp):
+        commandExp.exp.accept(self)
+        print('~=')
+        commandExp.exp2.accept(self)
+
+    def visitCommandExpAnd(self, commandExp):
+        commandExp.exp.accept(self)
+        print('and')
+        commandExp.exp2.accept(self)
+
+    def visitCommandExpOr(self, commandExp):
+        commandExp.exp.accept(self)
+        print('or')
+        commandExp.exp2.accept(self)
+   
     def visitCommandPrefix1(self, commandPrefix):
         commandPrefix.var.accept(self)
 

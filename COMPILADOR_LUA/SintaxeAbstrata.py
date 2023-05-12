@@ -9,11 +9,16 @@ class Program(metaclass=ABCMeta):
     pass
     
 class ProgramConcrete(Program):
-  def __init__(self, block, function):
+  def __init__(self, block):
     self.block = block
-    self.function = function
   def accept(self, visitor):
     return visitor.visitProgramConcrete(self)
+
+class ProgramConcrete2(Program):
+  def __init__(self, function):
+    self.function = function
+  def accept(self, visitor):
+    return visitor.visitProgramConcrete2(self)
   
 '''declaração de bloco'''
 class Block(metaclass=ABCMeta):
@@ -169,6 +174,52 @@ class ExpConcrete(Exp):
   def accept(self, visitor):
     return visitor.visitCommandExp(self)
 
+class ExpPrefixExp(Exp):
+  def __init__(self, prefix_exp):
+    self.prefix_exp = prefix_exp
+  def accept(self, visitor):
+    return visitor.visitCommandExpPrefixExp(self)
+
+class ExpTag(Exp):
+  def __init__(self, exp):
+    self.exp = exp
+  def accept(self, visitor):
+    return visitor.visitCommandTag(self)
+
+class ExpMinus(Exp):
+  def __init__(self, exp, exp2):
+    self.exp = exp
+    self.exp2 = exp2
+  def accept(self, visitor):
+    return visitor.visitCommandMinus(self)
+
+class ExpNot(Exp):
+  def __init__(self, exp):
+    self.exp = exp
+  def accept(self, visitor):
+    return visitor.visitCommandNot(self)
+
+class ExpPlus(Exp):
+  def __init__(self, exp, exp2):
+    self.exp = exp
+    self.exp2 = exp2
+  def accept(self, visitor):
+    return visitor.visitCommandPlus(self)
+
+class ExpDivide(Exp):
+  def __init__(self, exp, exp2):
+    self.exp = exp
+    self.exp2 = exp2
+  def accept(self, visitor):
+    return visitor.visitCommandDivide(self)
+
+class ExpExpo(Exp):
+  def __init__(self, exp, exp2):
+    self.exp = exp
+    self.exp2 = exp2
+  def accept(self, visitor):
+    return visitor.visitCommandExpo(self)
+
 class ExpDefFunctionConcrete(Exp):
   def __init__(self, def_function):
     self.def_function = def_function
@@ -200,10 +251,9 @@ class CallFunction(metaclass=ABCMeta):
     pass
 
 class CallFunctionConcrete(CallFunction):
-  def __init__(self, exp_prefix, args, name):
+  def __init__(self, exp_prefix, args):
     self.exp_prefix = exp_prefix
     self.args = args
-    self.name = name
   def accept(self, visitor):
     return visitor.visitCallFunction(self)
 
