@@ -73,59 +73,58 @@ class CommandStructFor(Command):
     return visitor.visitCommandStructFor(self)
 
 class CommandDefFunction(Command):
-  def __init__(self, function, local_function):
+  def __init__(self, function):
     self.function = function
-    self.local_function = local_function
   def accept(self, visitor):
     return visitor.visitCommandDefFunction(self)
 
 '''declaração de comandoret'''
-class CommandRet(metaclass=ABCMeta)
+class CommandRet(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
-class CommandRetConcrete(CommandRet)
-  def __init__(self, list_exps)
+class CommandRetConcrete(CommandRet):
+  def __init__(self, list_exps):
     self.list_exps = list_exps
   def accept(self, visitor):
-    return visitor.visitCommandRetConcrete(self)
+    return visitor.visitCommandRet2(self)
 
 '''declaração de nomefunção'''
-class NameFunction(metaclass=ABCMeta)
+class NameFunction(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de nomefunção'''
-class NameFunctionConcrete(name)
-  def __init__(self, name)
+class NameFunctionConcrete(NameFunction):
+  def __init__(self, name):
     self.name = name
   def accept(self, visitor):
     return visitor.visitCommandNameFunction(self)
     
 '''declaração de listvars'''
-class Listvars(metaclass=ABCMeta)
+class ListVars(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
-class ListvarsConcrete(ListVars)
-  def __init__(self, var, list_vars)
+class ListvarsConcrete(ListVars):
+  def __init__(self, var, list_vars):
     self.var = var
     self.list_vars = list_vars
   def accept(self, visitor):
     return visitor.visitCommandListvars(self)
 
 '''declaração de var'''
-class Var(metaclass=ABCMeta)
+class Var(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de var'''
-class VarConcrete(Var)
-  def __init__(self, name, prefix_exp, exp)
+class VarConcrete(Var):
+  def __init__(self, name, prefix_exp, exp):
     self.name = name
     self.prefix_exp = prefix_exp
     self.exp = exp
@@ -133,197 +132,239 @@ class VarConcrete(Var)
     return visitor.visitCommandVar(self)
 
 '''declaração de listadenomes'''
-class ListNames(metaclass=ABCMeta)
+class ListNames(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
-class ListNamesConcrete(ListNames)
-  def __init__(self, name, list_names)
+class ListNamesConcrete(ListNames):
+  def __init__(self, name, list_names):
     self.name = name
     self.list_names = list_names
   def accept(self, visitor):
     return visitor.visitListNames(self)
 
 '''declaração de listaexp'''
-class ListExps(metaclass=ABCMeta)
+class ListExps(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
     
-class ListExpsConcrete(ListExps)
-  def __init__(self, exp, list_exps)
-    self.name = name
-    self.list_names = list_names
+class ListExpsConcrete(ListExps):
+  def __init__(self, exp, list_exps):
+    self.exp = exp
+    self.list_exp = list_exps
   def accept(self, visitor):
-    pass
+    return visitor.visitListExps(self)
 
 '''declaração de exp'''
-class Exp(metaclass=ABCMeta)
+class Exp(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
-class ExpDefFunctionConcrete(Exp)
-  def __init__(self, def_function)
+class ExpConcrete(Exp):
+  def __init__(self, exp):
+    self.exp = exp
+  def accept(self, visitor):
+    return visitor.visitCommandExp(self)
+
+class ExpDefFunctionConcrete(Exp):
+  def __init__(self, def_function):
     self.def_function = def_function
   def accept(self, visitor):
-    pass
-
-class ExpConcrete(Exp)
-  def __init__(self, exp, exp2)
-    self.exp = exp
-    self.exp2 = exp2
-  def accept(self, visitor):
-    pass
+    return visitor.visitCommandDefFunction(self)
 
 '''declaração de expprefixo'''
-class ExpPrefix(metaclass=ABCMeta)
+class ExpPrefix(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
-class ExpPrefixConcrete(Exp)
-  def __init__(self,var, exp)
-    self.var = var
-    self.exp = exp
+class ExpPrefix2(Exp):
+  def __init__(self,call_function):
+    self.call_function = call_function 
   def accept(self, visitor):
-    pass
+    return visitor.visitCommandPrefix2(self)
+
+class ExpPrefix1(Exp):
+  def __init__(self,var):
+    self.var = var
+  def accept(self, visitor):
+    return visitor.visitCommandPrefix1(self)
 
 '''declaração de chamdadafuncao'''
-class CallFunction(metaclass=ABCMeta)
+class CallFunction(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
-class CallFunctionConcrete(CallFunction)
-  def __init__(self, exp_prefix, args)
+class CallFunctionConcrete(CallFunction):
+  def __init__(self, exp_prefix, args, name):
     self.exp_prefix = exp_prefix
     self.args = args
+    self.name = name
   def accept(self, visitor):
-    pass
+    return visitor.visitCallFunction(self)
 
 '''declaração de args'''
-class Args(metaclass=ABCMeta)
+class Args(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de args'''
-class ArgsConcrete(Args)
-  def __init__(self, list_exps)
+class ArgsConcrete(Args):
+  def __init__(self, list_exps):
     self.list_exps = list_exps
   def accept(self, visitor):
     pass
 
 '''declaração de corpofuncao'''
-class BodyFunction(metaclass=ABCMeta)
+class BodyFunction(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
-class BodyFunctionConcrete(BodyFunction)
-  def __init__(self, list_pars, block)
+class BodyFunctionConcrete(BodyFunction):
+  def __init__(self, list_pars, block):
     self.list_pars = list_pars
     self.block = block
   def accept(self, visitor):
     pass
 
 '''declaração de listapars'''
-class ListPars(metaclass=ABCMeta)
+class ListPars(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de listadecampos'''
-class listfields(metaclass=ABCMeta)
+class listfields(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de campo'''
-class Field(metaclass=ABCMeta)
+class Field(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de separadordecampos'''
-class SeparatorFields(metaclass=ABCMeta)
+class SeparatorFields(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de variável local'''
-class LocalVar(metaclass=ABCMeta)
+class LocalVar(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de opbin'''
-class OpBin(metaclass=ABCMeta)
+class OpBin(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de opunário'''
-class OpUnary(metaclass=ABCMeta)
+class OpUnary(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de função'''
-class Function(metaclass=ABCMeta)
+class Function(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
 '''declaração de função'''
-class FunctionConcrete(function)
-  def __init__(self, function, name_function, body_function)
-    self.function = function
+class FunctionConcrete(Function):
+  def __init__(self, name_function, body_function):
     self.name_function= name_function
     self.body_function = body_function
   def accept(self, visitor):
     return visitor.visitCommandFunctionConcrete(self)
   
 '''declaração de if'''
-class If(metaclass=ABCMeta)
+class If(metaclass=ABCMeta):
   @abstractmethod
+  def accept(self, visitor):
+    pass
+
+class IfConcrete(If):
+  def __init__(self, exp, block, else1, else_if):
+    self.exp = exp
+    self.block = block
+    self.else1 = else1
+    self.else_if = else_if
+  def accept(self, visitor):
+    pass
+
+class ElseIf(If):
+  def __init__(self, exp, block):
+    self.exp = exp
+    self.block = block
+  def accept(self, visitor):
+    pass
+
+class Else(If):
+  def __init__(self, block):
+    self.block = block
   def accept(self, visitor):
     pass
 
 '''declaração de while'''
-class StructWhile(metaclass=ABCMeta)
+class StructWhile(metaclass=ABCMeta):
   @abstractmethod
+  def accept(self, visitor):
+    pass
+
+class StructWhileConcret(StructWhile):
+  def __init__(self, exp, block):
+    self.exp = exp
+    self.block = block
   def accept(self, visitor):
     pass
 
 '''declaração de for'''
-class StructFor(metaclass=ABCMeta)
+class StructFor(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
-'''declaração de forin'''
-class StructForIn(metaclass=ABCMeta)
-  @abstractmethod
+class StructForConcret(StructFor):
+  def __init__(self, exp, block):
+    self.exp = exp
+    self.block = block
+  def accept(self, visitor):
+    pass
+
+class StructForIn(StructFor):
+  def __init__(self, list_names, list_exps):
+    self.list_names = list_names
+    self.list_exps = list_exps
   def accept(self, visitor):
     pass
 
 '''declaração de repeat'''
-class structRepeat(metaclass=ABCMeta)
+class StructRepeat(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass
 
-'''declaração de funcaolocal'''
-class LocalFunction(metaclass=ABCMeta)
-  @abstractmethod
+class StructRepeatConcrete(StructRepeat):
+  def __init__(self, block, exp):
+    self.block = block
+    self.exp = exp
   def accept(self, visitor):
     pass
 
 '''declaracao de error'''
-class Error(metaclass=ABCMeta)
+class Error(metaclass=ABCMeta):
   @abstractmethod
   def accept(self, visitor):
     pass

@@ -9,9 +9,6 @@ class AbstractVisitor(metaclass=ABCMeta):
     def visitBlockConcrete(self, block): pass
 
     @abstractmethod
-    def visitCommandConcrete(self, command): pass
-
-    @abstractmethod
     def visitCommandCallFunction(self, commandCallFunction): pass
 
     @abstractmethod

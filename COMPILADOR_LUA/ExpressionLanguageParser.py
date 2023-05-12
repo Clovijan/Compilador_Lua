@@ -67,7 +67,7 @@ def p_var(p):
            | prefix_exp LCOLCH exp RCOLCH'''
 
 
-# deifnicção de prefixexp
+# definição de prefixexp
 def p_prefix_exp(p):
     ''' prefix_exp : var
                    | call_function '''
@@ -184,8 +184,8 @@ def p_function(p):
 # definicao de if
 def p_if(p):
     '''if : IF exp THEN block END
-          | IF exp THEN block else
-          | IF exp THEN block else_if else'''
+          | IF exp THEN block else1
+          | IF exp THEN block else_if else1'''
 
 
 def p_else_if(p):
@@ -194,7 +194,7 @@ def p_else_if(p):
 
 
 def p_else(p):
-    '''else : ELSE block END'''
+    '''else1 : ELSE block END'''
 
 
 # definicao de while
