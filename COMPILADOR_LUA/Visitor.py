@@ -60,15 +60,15 @@ class Visitor(AbstractVisitor):
         commandIf.exp.accept(self)
         print('then')
         commandIf.block.accept(self)
-        print('else1')
-
+        commandIf.else1.accept(self)
+     
     def visitCommandIf3(self, commandIf):
         print('if')
         commandIf.exp.accept(self)
         print('then')
         commandIf.block.accept(self)
         commandIf.else_if.accept(self)
-        print('else1')
+        commandIf.else1.accept(self)
 
     def visitCommandElseIf(self, commandIf):
         print('elseif')
@@ -124,7 +124,7 @@ class Visitor(AbstractVisitor):
         commandDefFunction.function.accept(self)
 
     def visitCommandFunction(self, commandFunction):
-        commandFunction.function.accept(self)
+        print('function')
         commandFunction.name_function.accept(self)
         commandFunction.body_function.accept(self)
 
@@ -150,13 +150,10 @@ class Visitor(AbstractVisitor):
 
     def visitCommandExpNil(self, commandExp):
         commandExp.nil.accept(self)
+
+    def visitBooleanExp(self, booleanExp):
+        print(booleanExp.boolValue, end='')
       
-    def visitCommandExpTrue(self, commandExp):
-        commandExp.true.accept(self)
-
-    def visitCommandExpFalse(self, commandExp):
-        commandExp.false.accept(self)
-
     def visitCommandExpNumber(self, commandExp):
         commandExp.number.accept(self)
 
@@ -284,8 +281,7 @@ class Visitor(AbstractVisitor):
         commandListFields.field_empty.accept(self)
 
     def visitCommandListFields4(self, commandListFields):
-        commandListFields.field_empty.accept(self)          
-        commandListFields.separator_fields.accept(self)
+        commandListFields.field_empty.accept(self)              commandListFields.separator_fields.accept(self)
         commandListFields.list_fields.accept(self)
 
     def visitCommandListFieldEmpty(self, commandListField):
