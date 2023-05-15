@@ -1,5 +1,6 @@
 import ply.yacc as yacc
 from ExpressionLanguageLex import *
+import SintaxeAbstrata as sa
 
 precedence = (('left', 'OR'), ('left', 'AND'), ('left', 'GT', 'LT', 'GTEQUALS',
                                                 'LTEQUALS', 'EQUALS', 'DIF'),
@@ -13,12 +14,22 @@ def p_program(p):
     '''program : block
                | function 
                | function program'''
+    if (p[1] == 'block'):
+        p[0] = sa.ProgramConcrete(p[1])
+    elif (p[1] == 'function'):
+        p[0] = sa.ProgramConcrete(p[1])
+    elif (len(p) == 3):
+        p[0] = sa.ProgramConcrete2(p[1], p[2])
 
 
 # definição de bloco
 def p_block(p):
     '''block : command
              | command block'''
+    if (p[1] == 1):
+        p[0] = sa.BlockConcrete(p[1])
+    if (p[1] == 2):
+        p[0] = BlockConcrete2(p[1], p[2])
 
 
 # definição de comando
@@ -36,56 +47,110 @@ def p_command(p):
                | LOCAL list_vars ATRIB list_exps
                | command_ret'''
 
+    if (p[1] == 'list_vars'):
+        p[0] = CommandAtrib(p[1], p[3])
+    elif (p[1] == 'call_function'):
+        p[0] = CommandCallFunction(p[1])
+    elif (p[1] == 'rotulo'):
+        p[0] = CommandRotulo(p[1])
+    elif (p[1] == 'break'):
+        p[0] = CommandBreak(p[1])
+    elif (len(p) == 3):
+        p[0] = CommandDoBlockEnd(p[3])
+    elif (p[1] == 'struct_while'):
+        p[0] = CommandStructWhile(p[1])
+    elif (p[1] == 'struct_repeat'):
+        p[0] = CommandStructRepeat(p[1])
+    elif (p[1] == 'if'):
+        p[0] = CommandIf(p[1])
+    elif (p[1] == 'struct_for'):
+        p[0] = CommandStructFor(p[1])
+    elif (p[1] == 'struct_for_in'):
+        p[0] = CommandStructForIn(p[1])
+    elif (len(p) == 5):
+        p[0] = CommandLocalListVarsAtribListExps(p[2], p[4], p[5])
+
 
 # definição de comandret
 def p_command_ret(p):
     '''command_ret : RETURN SEMICOLON
                    | RETURN list_exps
                    | RETURN list_exps SEMICOLON '''
+    if (p[2] == 'semicolon'):
+        p[0] = CommandReturn(None)
+    elif (p[1] == 'return'):
+        p[0] = CommandReturnListExps(p[2])
+    elif (len(p) == 3):
+        p[0] = CommandReturnListExpsSemicolon(p[2])
 
 
 # definição de rótulo
 def p_rotulo(p):
     '''rotulo : DUALCOLON NAME DUALCOLON'''
+    p[0] = ExpRotulo(p[1], p[2], p[3])
 
 
 # definicao de nomefuncao
 def p_name_function(p):
     '''name_function : NAME
                      | NAME COLON NAME'''
+    if (len(p) == 1):
+        p[0] = ExpNameFunction1(p[1])
+    else:
+        p[0] = ExpNameFunction(p[1], p[2], p[3])
 
 
 # definição de listavars
 def p_list_vars(p):
     '''list_vars : var 
                  | var COMMA list_vars'''
+    if (len(p) == 1):
+        p[0] = ListvarsConcrete1(p[1])
+    else:
+        p[0] = ListvarConcrete2(p[1], p[3])
 
 
 # definição de var
 def p_var(p):
     '''var : NAME 
            | prefix_exp LCOLCH exp RCOLCH'''
+    if (len(p) == 1):
+        p[0] = VarConcrete1(p[1])
+    else:
+        p[0] = VarConcrete2(p[1], p[3])
 
 
 # definição de prefixexp
 def p_prefix_exp(p):
     ''' prefix_exp : var
-                   | call_function '''
+                  | call_function '''
+    if (p[1] == 'var'):
+        p[0] = PrefixExpVar(p[1])
+    if (p[1] == 'call_function'):
+        p[0] = PrefixExpCallFunction(p[1])
 
 
 # definição de listanomes
 def p_list_names(p):
     '''list_names : list_names COMMA NAME  
                   | NAME'''
+    if (len(p) == 3):
+        p[0] = ListNamesConcrete1(p[1], p[3])
+    else:
+        p[0] = ListNamesConcrete2(p[1])
 
 
 # definição de listaexps
 def p_list_exps(p):
     '''list_exps : exp COMMA list_exps
                  | exp'''
+    if (len(p) == 3):
+        p[0] = ListExpsConcrete1(p[1], p[3])
+    else:
+        p[0] = ListExpsConcrete2(p[1])
 
 
-# definição de exp
+# definição de exp (professor pediu para substituir nil por nan)
 def p_exp(p):
     '''exp : NIL 
            | FALSE
@@ -114,16 +179,72 @@ def p_exp(p):
            | exp AND exp
            | exp OR exp'''
 
+    if (p[1] == 'nil'):
+        p[0] = sa.ExpNil([1])
+    elif (p[1] == 'true' or p[1] == 'false'):
+        p[0] = sa.BooleanExp(p[1])
+    elif (p[1] == 'number'):
+        p[0] = sa.ExpNumber([1])
+    elif (p[1] == 'string'):
+        p[0] = sa.ExpString([1])
+    elif (p[1] == 'varargs'):
+        p[0] = sa.ExpVarargs([1])
+    elif (p[1] == 'def_function'):
+        p[0] = sa.ExpDefFunction([1])
+    elif (p[1] == 'prefix_exp'):
+        p[0] = sa.ExpPrefixExp([1])
+    elif (p[1] == 'tag'):
+        p[0] = sa.ExpTag([2])
+    elif (p[1] == 'minus'):
+        p[0] = sa.ExpMinus([2])
+    elif (p[1] == 'not'):
+        p[0] = sa.ExpNot([2])
+#  elif (p[2] == 'PLUS'):
+#       p[0] = ExpPlus([1], p[3]) PAREI AQUI....12/05/2023
+    elif (len(p) == 3):
+        p[0] = sa.ExpMinus([1], p[3])
+    elif (p[2] == 'times'):
+        p[0] = ExpTimes([1], p[3])
+    elif (p[2] == 'divide'):
+        p[0] = ExpDivide([1], p[3])
+    elif (p[2] == 'expo'):
+        p[0] = ExpExpo([1], p[3])
+    elif (p[2] == 'percentual'):
+        p[0] = ExpPercentual([1], p[3])
+    elif (p[2] == 'concat'):
+        p[0] = ExpConcat([1], p[3])
+    elif (p[2] == 'lt'):
+        p[0] = ExpLt([1], p[3])
+    elif (p[2] == 'ltequals'):
+        p[0] = ExpLtEquals([1], p[3])
+    elif (p[2] == 'gt'):
+        p[0] = ExpGt([1], p[3])
+    elif (p[2] == 'gtequals'):
+        p[0] = ExpGtEqual([1], p[3])
+    elif (p[2] == 'equals'):
+        p[0] = ExpEquals([1], p[3])
+    elif (p[2] == 'dif'):
+        p[0] = ExpDif([1], p[3])
+    elif (p[2] == 'and'):
+        p[0] = ExpAnd([1], p[3])
+    elif (p[2] == 'or'):
+        p[0] = ExpOr([1], p[3])
+
 
 # definição de chamadafuncao
 def p_call_function(p):
     '''call_function : prefix_exp args'''
+    p[0] = CallFunctionConcrete(p[2])
 
 
 # definição de args
 def p_args(p):
     ''' args : LPAREN list_exps RPAREN
              | LPAREN RPAREN'''
+    if (len(p) == 4):
+        p[0] = ExpArgs1(p[2])
+    elif (len(p) == 3):
+        p[0] = ExpArgs2(p[1], p[2])
 
 
 # definição de deffunção

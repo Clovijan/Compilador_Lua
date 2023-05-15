@@ -9,7 +9,7 @@ print("hello")
 '''
 lexer.input(data)
 parser = yacc.yacc()
-result = parser.parse(debug=True)
+result = parser.parse(debug=False)
 print("#realiza a analise semantica")
 visitor = Visitor()
   

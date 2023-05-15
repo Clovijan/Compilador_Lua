@@ -28,7 +28,7 @@ reserved = {
 tokens = [
     'NAME', 'NUMBER', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'LPAREN',
     'RPAREN', 'LBRACE', 'RBRACE', 'COMMA', 'SEMICOLON', 'COLON', 'DUALCOLON',
-    'DOT', 'VARARGS', 'ATRIB', 'DIF', 'GT', 'LT', 'GTEQUALS', 'LTEQUALS',
+    'VARARGS', 'ATRIB', 'DIF', 'GT', 'LT', 'GTEQUALS', 'LTEQUALS',
     'PERCENTUAL', 'EXPO', 'CONCAT', 'TAG', 'LCOLCH', 'RCOLCH'
 ] + list(reserved.values())
 
@@ -49,7 +49,6 @@ t_SEMICOLON = r';'
 t_COLON = r':'
 t_DUALCOLON = r'::'
 t_PERCENTUAL = r'%'
-t_DOT = r'\.'
 t_VARARGS = r'\.\.\.'
 t_LCOLCH = r'\['
 t_RCOLCH = r'\]'
@@ -81,10 +80,6 @@ def t_COMMENT(t):
     pass
 
 
-# Ignorar espaços em branco
-t_ignore = ' \t'
-
-
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value.lower(), 'ID')
@@ -94,6 +89,9 @@ def t_ID(t):
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+
+
+t_ignore = ' \t'  # Ignorar espaços em branco
 
 
 def t_STRING(t):

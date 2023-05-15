@@ -1,6 +1,5 @@
 from abc import abstractmethod
 from abc import ABCMeta
-from Visitor import Visitor
 
 ''' declaração de program'''
 class Program(metaclass=ABCMeta):
