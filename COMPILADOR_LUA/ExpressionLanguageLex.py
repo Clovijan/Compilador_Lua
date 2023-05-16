@@ -27,7 +27,7 @@ reserved = {
 # Lista de tokens
 tokens = [
     'NAME', 'NUMBER', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'LPAREN',
-    'RPAREN', 'LBRACE', 'RBRACE', 'COMMA', 'SEMICOLON', 'COLON', 'DUALCOLON',
+    'RPAREN', 'COMMA', 'SEMICOLON', 'COLON', 'DUALCOLON',
     'VARARGS', 'ATRIB', 'DIF', 'GT', 'LT', 'GTEQUALS', 'LTEQUALS',
     'PERCENTUAL', 'EXPO', 'CONCAT', 'TAG', 'LCOLCH', 'RCOLCH'
 ] + list(reserved.values())
@@ -42,8 +42,6 @@ t_EQUALS = r'=='
 t_DIF = r'~='
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
-t_LBRACE = r'{'
-t_RBRACE = r'}'
 t_COMMA = r','
 t_SEMICOLON = r';'
 t_COLON = r':'

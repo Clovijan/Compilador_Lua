@@ -270,45 +270,11 @@ def p_list_pars(p):
         p[0] = sa.ListPars2(p[1], p[3])
     elif (p[1] == 'varargs'):
       p[0] = sa.ListPars3(p[1])
-      
-
-
-# definição de listadecampos
-def p_list_fields(p):
-    '''list_fields : field 
-                   | field separator_fields list_fields
-                   | field_empty
-                   | field_empty separator_fields list_fields'''
-
-
-# definição de campo vazio
-def p_field_empty(p):
-    '''field_empty : LCOLCH exp RCOLCH
-                   | NAME'''
-
-
-# definição de campo
-def p_field(p):
-    '''field : LCOLCH exp RCOLCH ATRIB exp
-             | NAME ATRIB exp '''
-
-
-# definição de sepcampos
-def p_separator_fields(p):
-    '''separator_fields : COMMA
-                        | SEMICOLON'''
-
-
-# definição de variável local
-def p_local_var(p):
-    '''local_var : LOCAL list_names ATRIB list_exps
-                 | LOCAL list_names
-                 | LOCAL NAME ATRIB exp'''
 
 
 # definicao de função
 def p_function(p):
-    '''function : FUNCTION name_function F'''
+    '''function : FUNCTION name_function body_function'''
 
 
 # definicao de if
