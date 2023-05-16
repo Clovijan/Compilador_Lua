@@ -29,7 +29,7 @@ def p_block(p):
     if (p[1] == 1):
         p[0] = sa.BlockConcrete(p[1])
     if (p[1] == 2):
-        p[0] = BlockConcrete2(p[1], p[2])
+        p[0] = sa.BlockConcrete2(p[1], p[2])
 
 
 # definição de comando
@@ -48,27 +48,27 @@ def p_command(p):
                | command_ret'''
 
     if (p[1] == 'list_vars'):
-        p[0] = CommandAtrib(p[1], p[3])
+        p[0] = sa.CommandAtrib(p[1], p[3])
     elif (p[1] == 'call_function'):
-        p[0] = CommandCallFunction(p[1])
+        p[0] = sa.CommandCallFunction(p[1])
     elif (p[1] == 'rotulo'):
-        p[0] = CommandRotulo(p[1])
+        p[0] = sa.CommandRotulo(p[1])
     elif (p[1] == 'break'):
-        p[0] = CommandBreak(p[1])
+        p[0] = sa.CommandBreak(p[1])
     elif (len(p) == 3):
-        p[0] = CommandDoBlockEnd(p[3])
+        p[0] = sa.CommandDoBlockEnd(p[3])
     elif (p[1] == 'struct_while'):
-        p[0] = CommandStructWhile(p[1])
+        p[0] = sa.CommandStructWhile(p[1])
     elif (p[1] == 'struct_repeat'):
-        p[0] = CommandStructRepeat(p[1])
+        p[0] = sa.CommandStructRepeat(p[1])
     elif (p[1] == 'if'):
-        p[0] = CommandIf(p[1])
+        p[0] = sa.CommandIf(p[1])
     elif (p[1] == 'struct_for'):
-        p[0] = CommandStructFor(p[1])
+        p[0] = sa.CommandStructFor(p[1])
     elif (p[1] == 'struct_for_in'):
-        p[0] = CommandStructForIn(p[1])
+        p[0] = sa.CommandStructForIn(p[1])
     elif (len(p) == 5):
-        p[0] = CommandLocalListVarsAtribListExps(p[2], p[4], p[5])
+        p[0] = sa.CommandLocalListVarsAtribListExps(p[2], p[4], p[5])
 
 
 # definição de comandret
@@ -77,17 +77,17 @@ def p_command_ret(p):
                    | RETURN list_exps
                    | RETURN list_exps SEMICOLON '''
     if (p[2] == 'semicolon'):
-        p[0] = CommandReturn(None)
+        p[0] = sa.CommandReturn(None)
     elif (p[1] == 'return'):
-        p[0] = CommandReturnListExps(p[2])
+        p[0] = sa.CommandReturnListExps(p[2])
     elif (len(p) == 3):
-        p[0] = CommandReturnListExpsSemicolon(p[2])
+        p[0] = sa.CommandReturnListExpsSemicolon(p[2])
 
 
 # definição de rótulo
 def p_rotulo(p):
     '''rotulo : DUALCOLON NAME DUALCOLON'''
-    p[0] = ExpRotulo(p[1], p[2], p[3])
+    p[0] = sa.ExpRotulo(p[1], p[2], p[3])
 
 
 # definicao de nomefuncao
@@ -95,9 +95,9 @@ def p_name_function(p):
     '''name_function : NAME
                      | NAME COLON NAME'''
     if (len(p) == 1):
-        p[0] = ExpNameFunction1(p[1])
+        p[0] = sa.ExpNameFunction1(p[1])
     else:
-        p[0] = ExpNameFunction(p[1], p[2], p[3])
+        p[0] = sa.ExpNameFunction(p[1], p[2], p[3])
 
 
 # definição de listavars
@@ -105,9 +105,9 @@ def p_list_vars(p):
     '''list_vars : var 
                  | var COMMA list_vars'''
     if (len(p) == 1):
-        p[0] = ListvarsConcrete1(p[1])
+        p[0] = sa.ListvarsConcrete1(p[1])
     else:
-        p[0] = ListvarConcrete2(p[1], p[3])
+        p[0] = sa.ListvarConcrete2(p[1], p[3])
 
 
 # definição de var
@@ -115,9 +115,9 @@ def p_var(p):
     '''var : NAME 
            | prefix_exp LCOLCH exp RCOLCH'''
     if (len(p) == 1):
-        p[0] = VarConcrete1(p[1])
+        p[0] = sa.VarConcrete1(p[1])
     else:
-        p[0] = VarConcrete2(p[1], p[3])
+        p[0] = sa.VarConcrete2(p[1], p[3])
 
 
 # definição de prefixexp
@@ -125,9 +125,9 @@ def p_prefix_exp(p):
     ''' prefix_exp : var
                   | call_function '''
     if (p[1] == 'var'):
-        p[0] = PrefixExpVar(p[1])
+        p[0] = sa.PrefixExpVar(p[1])
     if (p[1] == 'call_function'):
-        p[0] = PrefixExpCallFunction(p[1])
+        p[0] = sa.PrefixExpCallFunction(p[1])
 
 
 # definição de listanomes
@@ -135,9 +135,9 @@ def p_list_names(p):
     '''list_names : list_names COMMA NAME  
                   | NAME'''
     if (len(p) == 3):
-        p[0] = ListNamesConcrete1(p[1], p[3])
+        p[0] = sa.ListNamesConcrete1(p[1], p[3])
     else:
-        p[0] = ListNamesConcrete2(p[1])
+        p[0] = sa.ListNamesConcrete2(p[1])
 
 
 # definição de listaexps
@@ -145,9 +145,9 @@ def p_list_exps(p):
     '''list_exps : exp COMMA list_exps
                  | exp'''
     if (len(p) == 3):
-        p[0] = ListExpsConcrete1(p[1], p[3])
+        p[0] = sa.ListExpsConcrete1(p[1], p[3])
     else:
-        p[0] = ListExpsConcrete2(p[1])
+        p[0] = sa.ListExpsConcrete2(p[1])
 
 
 # definição de exp (professor pediu para substituir nil por nan)
@@ -204,37 +204,37 @@ def p_exp(p):
     elif (len(p) == 3):
         p[0] = sa.ExpMinus([1], p[3])
     elif (p[2] == 'times'):
-        p[0] = ExpTimes([1], p[3])
+        p[0] = sa.ExpTimes([1], p[3])
     elif (p[2] == 'divide'):
-        p[0] = ExpDivide([1], p[3])
+        p[0] = sa.ExpDivide([1], p[3])
     elif (p[2] == 'expo'):
-        p[0] = ExpExpo([1], p[3])
+        p[0] = sa.ExpExpo([1], p[3])
     elif (p[2] == 'percentual'):
-        p[0] = ExpPercentual([1], p[3])
+        p[0] = sa.ExpPercentual([1], p[3])
     elif (p[2] == 'concat'):
-        p[0] = ExpConcat([1], p[3])
+        p[0] = sa.ExpConcat([1], p[3])
     elif (p[2] == 'lt'):
-        p[0] = ExpLt([1], p[3])
+        p[0] = sa.ExpLt([1], p[3])
     elif (p[2] == 'ltequals'):
-        p[0] = ExpLtEquals([1], p[3])
+        p[0] = sa.ExpLtEquals([1], p[3])
     elif (p[2] == 'gt'):
-        p[0] = ExpGt([1], p[3])
+        p[0] = sa.ExpGt([1], p[3])
     elif (p[2] == 'gtequals'):
-        p[0] = ExpGtEqual([1], p[3])
+        p[0] = sa.ExpGtEqual([1], p[3])
     elif (p[2] == 'equals'):
-        p[0] = ExpEquals([1], p[3])
+        p[0] = sa.ExpEquals([1], p[3])
     elif (p[2] == 'dif'):
-        p[0] = ExpDif([1], p[3])
+        p[0] = sa.ExpDif([1], p[3])
     elif (p[2] == 'and'):
-        p[0] = ExpAnd([1], p[3])
+        p[0] = sa.ExpAnd([1], p[3])
     elif (p[2] == 'or'):
-        p[0] = ExpOr([1], p[3])
+        p[0] = sa.ExpOr([1], p[3])
 
 
 # definição de chamadafuncao
 def p_call_function(p):
     '''call_function : prefix_exp args'''
-    p[0] = CallFunctionConcrete(p[2])
+    p[0] = sa.CallFunctionConcrete(p[2])
 
 
 # definição de args
@@ -250,11 +250,13 @@ def p_args(p):
 # definição de deffunção
 def p_def_function(p):
     '''def_function : function'''
+    p[0] = sa.ConcreteDefFunction(p[1])
 
 
 # definição de corpofunção
 def p_body_function(p):
     '''body_function : LPAREN list_pars RPAREN block END'''
+    p[0] = sa.ConcreteBodyFunction(p[2], p[4])
 
 
 # definição de listapars
@@ -262,6 +264,11 @@ def p_list_pars(p):
     '''list_pars : list_names
                  | list_names COMMA VARARGS
                  | VARARGS'''
+    if (p[0] == 'list_names'):
+        p[0] = sa.ListPars(p[1])
+    elif (len(p) == 3):
+        p[0] = sa.ListPars3(p[1])
+        
 
 
 # definição de listadecampos

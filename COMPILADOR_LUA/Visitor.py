@@ -1,4 +1,5 @@
 from AbstractVisitor import AbstractVisitor
+from ExpressionLanguageParser import *
 
 # global tab
 tab = 0
@@ -281,7 +282,8 @@ class Visitor(AbstractVisitor):
         commandListFields.field_empty.accept(self)
 
     def visitCommandListFields4(self, commandListFields):
-        commandListFields.field_empty.accept(self)              commandListFields.separator_fields.accept(self)
+        commandListFields.field_empty.accept(self)                    
+        commandListFields.separator_fields.accept(self)
         commandListFields.list_fields.accept(self)
 
     def visitCommandListFieldEmpty(self, commandListField):
