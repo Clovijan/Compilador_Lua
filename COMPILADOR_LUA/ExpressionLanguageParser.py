@@ -242,9 +242,9 @@ def p_args(p):
     ''' args : LPAREN list_exps RPAREN
              | LPAREN RPAREN'''
     if (len(p) == 4):
-        p[0] = ExpArgs1(p[2])
+        p[0] = sa.ExpArgs1(p[2])
     elif (len(p) == 3):
-        p[0] = ExpArgs2(p[1], p[2])
+        p[0] = sa.ExpArgs2(p[1], p[2])
 
 
 # definição de deffunção
@@ -267,8 +267,10 @@ def p_list_pars(p):
     if (p[0] == 'list_names'):
         p[0] = sa.ListPars(p[1])
     elif (len(p) == 3):
-        p[0] = sa.ListPars3(p[1])
-        
+        p[0] = sa.ListPars2(p[1], p[3])
+    elif (p[1] == 'varargs'):
+      p[0] = sa.ListPars3(p[1])
+      
 
 
 # definição de listadecampos
@@ -306,7 +308,7 @@ def p_local_var(p):
 
 # definicao de função
 def p_function(p):
-    '''function : FUNCTION name_function body_function'''
+    '''function : FUNCTION name_function F'''
 
 
 # definicao de if
