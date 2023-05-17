@@ -56,7 +56,7 @@ def p_command(p):
     elif (p[1] == 'break'):
         p[0] = sa.CommandBreak(p[1])
     elif (len(p) == 3):
-        p[0] = sa.CommandDoBlockEnd(p[3])
+        p[0] = sa.CommandDoBlockEnd(p[2])
     elif (p[1] == 'struct_while'):
         p[0] = sa.CommandStructWhile(p[1])
     elif (p[1] == 'struct_repeat'):
@@ -269,12 +269,13 @@ def p_list_pars(p):
     elif (len(p) == 3):
         p[0] = sa.ListPars2(p[1], p[3])
     elif (p[1] == 'varargs'):
-      p[0] = sa.ListPars3(p[1])
+        p[0] = sa.ListPars3(p[1])
 
 
 # definicao de função
 def p_function(p):
     '''function : FUNCTION name_function body_function'''
+    p[0] = sa.ConcreteFunction(p[2], p[3])
 
 
 # definicao de if
@@ -282,36 +283,54 @@ def p_if(p):
     '''if : IF exp THEN block END
           | IF exp THEN block else1
           | IF exp THEN block else_if else1'''
+    if (p[5] == 'end'):
+        p[0] = sa.IfConcrete(p[2], p[4])
+    elif (p[5] == 'else1'):
+        p[0] = sa.IfConcrete2(p[2], p[4], p[5])
+    elif (len(p) == 6):
+        p[0] = sa.IfConcrete3(p[2], p[4], p[5], p[6])
 
 
 def p_else_if(p):
     '''else_if : ELSEIF exp THEN block
                | ELSEIF exp THEN block else_if'''
+    if (len(p) == 4):
+        p[0] = sa.ConcreteElseIf1(p[2], p[4])
+    elif (len(p) == 5):
+        p[0] = sa.ConcreteElseIf2(p[2], p[4], p[5])
 
 
 def p_else(p):
     '''else1 : ELSE block END'''
+    p[0] = sa.ConcreteElse(p[2])
 
 
 # definicao de while
 def p_struct_while(p):
     '''struct_while : WHILE exp DO block END'''
+    p[0] = sa.StructForConcret(p[2], p[4])
 
 
 # definicao de for
 def p_struct_for(p):
     '''struct_for : FOR NAME ATRIB exp COMMA exp DO block END
                   | FOR NAME ATRIB exp COMMA exp COMMA exp DO block END'''
+    if (len(p) == 9):
+        p[0] = sa.StructForConcret1(p[4], p[6], p[8])
+    elif (len(p) == 11):
+        p[0] = sa.StructForConcret2(p[4], p[6], p[8], p[10])
 
 
 # definicao de forin
 def p_struct_for_in(p):
     '''struct_for_in : FOR list_names IN list_exps DO block END'''
+    p[0] = sa.StructForInConcret(p[2], p[4], p[6])
 
 
 # definição de repeat
 def p_struct_repeat(p):
     '''struct_repeat : REPEAT block UNTIL exp'''
+    p[0] = sa.StructRepeatConcrete(p[2], p[4])
 
 
 # definicao de error

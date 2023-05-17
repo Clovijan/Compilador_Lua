@@ -103,15 +103,6 @@ class CommandDoBrlockEnd(Command):
         return Visitor.visitCommandDoBlockEnd(self)
 
 
-# aguardando validação dos membros do grupo
-# class CommandStructWhile(Command):
-#     def __init__(self, struct_while):
-#         self.struct_while = struct_while
-
-#     def accept(self, visitor):
-#         return Visitor.visitCommandStructWhile(self)
-
-
 class CommandStructWhile(Command):
     def __init__(self, exp, block):
         self.exp = exp
@@ -157,15 +148,6 @@ class CommandStructForIn(Command):
         return Visitor.visitCommandStructForIn(self)
 
 
-# aguardando validação dos membros do grupo
-# class CommandStructFor(Command):
-#     def __init__(self, struct_for):
-#         self.struct_for = struct_for
-
-#     def accept(self, visitor):
-#         return Visitor.visitCommandStructFor(self)
-
-
 class CommandStructFor(Command):
     def __init__(self, name, exp, exp2, block):
         self.name = name
@@ -209,7 +191,7 @@ class CommandRetConcrete(CommandRet):
         self.list_exps = list_exps
 
     def accept(self, visitor):
-        return Visitor.visitCommandRet2(self)
+        return Visitor.visitCommandRet(self)
 
 
 '''declaração de rótulo'''
@@ -253,14 +235,6 @@ class NameFunction(metaclass=ABCMeta):
             return Visitor.visitExpNameFunction2(self)
 
 
-# '''declaração de nomefunção'''
-
-# class NameFunctionConcrete(NameFunction):
-#     def __init__(self, name):
-#         self.name = name
-
-#     def accept(self, visitor):
-#         return Visitor.visitCommandNameFunction(self)
 '''declaração de listvars'''
 
 
@@ -473,6 +447,24 @@ class ConcreteDefFunction(DefFuncao):
         return Visitor.visitConcreteDefFunction(self)
 
 
+'''Definição de função'''
+
+
+class ConcreteFunction(metaclass=ABCMeta):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class FunctionConcrete(ConcreteFunction):
+    def __init__(self, name_function, body_function):
+        self.name_function = name_function
+        self.body_function = body_function
+
+    def accept(self, divisor):
+        return Visitor.visitFunctionConcrete(self)
+
+
 # aqui a passagem de parâmetro está incorreta, ExpPrefix2(ExpPrefix)
 '''declaração de expprefixo'''
 
@@ -496,7 +488,7 @@ class PrefixExpCallFunction(ExpPrefix):
         self.call_function = call_function
 
     def accept(self, visitor):
-        return Visitor.visitPrefixExpCallFunction(self)
+        return Visitor.visitCommandExpCallFunction(self)
 
 
 '''declaração de chamdadafuncao'''
@@ -514,7 +506,7 @@ class CallFunctionConcrete(CallFunction):
         self.args = args
 
     def accept(self, visitor):
-        return Visitor.visitCallFunctionConcrete(self)
+        return Visitor.visitCommandCallFunction(self)
 
 
 '''declaração de args'''
@@ -531,23 +523,16 @@ class ExpArgs1(Args):
         self.list_exps = list_exps
 
     def accep(self, visitor):
-        return Visitor.visitExpArgs1(self)
+        return Visitor.visitCommandArgs(self)
 
 
-'''declaração de args'''
+class ExpArgs2(Args):
+    def __init__(self, LPAREN, RPAREN):
+        self.LPAREN = LPAREN
+        self.RPAREN = RPAREN
 
-
-class ArgsConcrete(Args):
-    def __init__(self, list_exps):
-        self.list_exps = list_exps
-
-    def accept(self, visitor):
-        return Visitor.visitExpArgs(self)
-
-
-class ArgsConcrete2(Args):
-    def accept(self, visitor):
-        return Visitor.visitExpArgs2(self)
+    def accep(self, visitor):
+        return Visitor.visitCommandArgs2(self)
 
 
 ''''declaração de corpofuncao'''
@@ -602,87 +587,6 @@ class ListPars3(ListPars):
         return Visitor.visitCommandListPars3(self)
 
 
-'''declaração de listadecampos'''
-
-
-class Listfields(metaclass=ABCMeta):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class Listfields(Listfields):
-    def __init__(self, field):
-        self.field = field
-
-    def accept(self, visitor):
-        return Visitor.visitCommandListFields(self)
-
-
-class Listfields2(Listfields):
-    def __init__(self, field, separator_fields, list_fields):
-        self.field = field
-        self.separator_fields = separator_fields
-        self.list_fields = list_fields
-
-    def accept(self, visitor):
-        return Visitor.visitCommandListFields2(self)
-
-
-class Listfields3(Listfields):
-    def __init__(self, field_empty):
-        self.field_empty = field_empty
-
-    def accept(self, visitor):
-        return Visitor.visitCommandListFields3(self)
-
-
-class Listfields4(Listfields):
-    def __init__(self, field_empty, separator_fields, list_fields):
-        self.field_empty = field_empty
-        self.separator_fields = separator_fields
-        self.list_fields = list_fields
-
-    def accept(self, visitor):
-        return Visitor.visitCommandListFields4(self)
-
-
-'''declaração de campo'''
-
-
-class FieldEmpty(metaclass=ABCMeta):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class FieldEmptyConcrete(FieldEmpty):
-    def __init__(self, field_empty):
-        self.field_empty = field_empty
-
-    def accept(self, visitor):
-        return Visitor.visitCommandListFieldEmpty(self)
-
-
-'''declaração de separadordecampos'''
-
-
-class SeparatorFields(metaclass=ABCMeta):
-    @abstractmethod
-    def accept(self, visitor):
-        pass
-
-
-class SeparatorFieldsConcrete(SeparatorFields):
-    def accept(self, visitor):
-        return Visitor.visitCommandSeparatorFields(self)
-
-
-class SeparatorFieldsConcrete2(SeparatorFields):
-    def accept(self, visitor):
-        return Visitor.visitCommandSeparatorFields2(self)
-
-
 '''declaração de variável local'''
 
 
@@ -694,7 +598,7 @@ class LocalVar(metaclass=ABCMeta):
 
 class LocalVarConcrete(LocalVar):
     def __init__(self, list_names, list_exps):
-        self.list_names = name_function
+        self.list_names = list_names
         self.list_exps = list_exps
 
     def accept(self, visitor):
@@ -725,19 +629,7 @@ class Function(metaclass=ABCMeta):
     @abstractmethod
     def accept(self, visitor):
         pass
-
-
-'''declaração de função'''
-
-
-class FunctionConcrete(Function):
-    def __init__(self, name_function, body_function):
-        self.name_function = name_function
-        self.body_function = body_function
-
-    def accept(self, visitor):
-        return visitor.visitCommandFunction(self)
-
+      
 
 '''declaração de corpo da função'''
 
@@ -754,7 +646,7 @@ class ConcreteBodyFunction(BodyFunction):
         self.block = block
 
     def accept(self, visitor):
-        return Visitor.ConcreteBodyFunction(self)
+        return Visitor.visitCommandBodyFunction(self)
 
 
 '''declaração de if'''
@@ -786,26 +678,52 @@ class IfConcrete2(If):
 
 
 class IfConcrete3(If):
-    def __init__(self, exp, block, else1, else_if):
+    def __init__(self, exp, block, else_if, else1):
         self.exp = exp
         self.block = block
-        self.else1 = else1
         self.else_if = else_if
+        self.else1 = else1
 
     def accept(self, visitor):
         return Visitor.visitCommandIf3(self)
 
 
-class ElseIf(If):
+'''Definição de else'''
+
+
+class Else(metaclass=ABCMeta):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ConcreteElse(Else):
+    def __init__(self, block):
+        self.block = block
+
+    def accept(self, visitor):
+        return Visitor.visitCommandElse(self)
+
+
+'''Definição de else_if'''
+
+
+class ElseIf(metaclass=ABCMeta):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class ConcreteElseIf1(ElseIf):
     def __init__(self, exp, block):
         self.exp = exp
         self.block = block
 
     def accept(self, visitor):
-        return Visitor.visitCommandElseIf(self)
+        return Visitor.visitCommandElseIf1(self)
 
 
-class ElseIf2(If):
+class ConcreteElseIf2(ElseIf):
     def __init__(self, exp, block, else_if):
         self.exp = exp
         self.block = block
@@ -813,14 +731,6 @@ class ElseIf2(If):
 
     def accept(self, visitor):
         return Visitor.visitCommandElseIf2(self)
-
-
-class Else(If):
-    def __init__(self, block):
-        self.block = block
-
-    def accept(self, visitor):
-        return Visitor.visitCommandElse(self)
 
 
 '''declaração de while'''
@@ -850,19 +760,41 @@ class StructFor(metaclass=ABCMeta):
         pass
 
 
-class StructForConcret(StructFor):
-    def __init__(self, exp, block):
-        self.exp = exp
+class StructForConcret1(StructFor):
+    def __init__(self, exp1, exp2, block):
+        self.exp1 = exp1
+        self.exp2 = exp2
         self.block = block
 
     def accept(self, visitor):
-        return Visitor.visitCommandStructFor(self)
+        return Visitor.visitCommandStructFor1(self)
 
 
-class StructForIn(StructFor):
-    def __init__(self, list_names, list_exps):
+class StructForConcret2(StructFor):
+    def __init__(self, exp1, exp2, exp3, block):
+        self.exp1 = exp1
+        self.exp2 = exp2
+        self.exp3 = exp3
+        self.block = block
+
+    def accept(self, visitor):
+        return Visitor.visitCommandStructFor2(self)
+
+
+'''definição struct for in'''
+
+
+class StructForIn(metaclass=ABCMeta):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+
+class StructForInConcret(StructForIn):
+    def __init__(self, list_names, list_exps, block):
         self.list_names = list_names
         self.list_exps = list_exps
+        self.block = block
 
     def accept(self, visitor):
         return Visitor.visitCommandStructForIn(self)
